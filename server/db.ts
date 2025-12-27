@@ -1,11 +1,10 @@
-import { eq } from "drizzle-orm";
+import { eq, asc, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, siteContent, InsertSiteContent, projects, InsertProject, images, InsertImage } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
-// Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
@@ -17,6 +16,8 @@ export async function getDb() {
   }
   return _db;
 }
+
+// ============ USER FUNCTIONS ============
 
 export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) {
@@ -89,4 +90,101 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// ============ SITE CONTENT FUNCTIONS ============
+
+export async function getAllSiteContent() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(siteContent);
+}
+
+export async function getSiteContentBySection(section: string) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(siteContent).where(eq(siteContent.section, section));
+}
+
+export async function getSiteContentByKey(key: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(siteContent).where(eq(siteContent.key, key)).limit(1);
+  return result[0] || null;
+}
+
+export async function upsertSiteContent(data: InsertSiteContent) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.insert(siteContent).values(data).onDuplicateKeyUpdate({
+    set: {
+      titleAr: data.titleAr,
+      titleEn: data.titleEn,
+      contentAr: data.contentAr,
+      contentEn: data.contentEn,
+      section: data.section,
+    },
+  });
+}
+
+// ============ PROJECTS FUNCTIONS ============
+
+export async function getAllProjects() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(projects).orderBy(asc(projects.sortOrder));
+}
+
+export async function getActiveProjects() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(projects).where(eq(projects.isActive, true)).orderBy(asc(projects.sortOrder));
+}
+
+export async function getProjectById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(projects).where(eq(projects.id, id)).limit(1);
+  return result[0] || null;
+}
+
+export async function createProject(data: InsertProject) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(projects).values(data);
+  return result[0].insertId;
+}
+
+export async function updateProject(id: number, data: Partial<InsertProject>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(projects).set(data).where(eq(projects.id, id));
+}
+
+export async function deleteProject(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(projects).where(eq(projects.id, id));
+}
+
+// ============ IMAGES FUNCTIONS ============
+
+export async function getAllImages() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(images).orderBy(desc(images.createdAt));
+}
+
+export async function createImage(data: InsertImage) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(images).values(data);
+  return result[0].insertId;
+}
+
+export async function deleteImage(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const image = await db.select().from(images).where(eq(images.id, id)).limit(1);
+  await db.delete(images).where(eq(images.id, id));
+  return image[0] || null;
+}

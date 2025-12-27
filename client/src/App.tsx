@@ -4,36 +4,51 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
+import { lazy, Suspense } from "react";
+import { Loader2 } from "lucide-react";
 
-function Router() {
-  // make sure to consider if you need authentication for certain routes
+// Lazy load admin pages
+const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
+const AdminContent = lazy(() => import("./pages/admin/Content"));
+const AdminProjects = lazy(() => import("./pages/admin/Projects"));
+const AdminImages = lazy(() => import("./pages/admin/Images"));
+
+function LoadingSpinner() {
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <div className="min-h-screen flex items-center justify-center">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    </div>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
+function Router() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/admin" component={AdminDashboard} />
+        <Route path="/admin/content" component={AdminContent} />
+        <Route path="/admin/projects" component={AdminProjects} />
+        <Route path="/admin/images" component={AdminImages} />
+        <Route path="/404" component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
+  );
+}
 
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+      <ThemeProvider defaultTheme="light">
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </LanguageProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
