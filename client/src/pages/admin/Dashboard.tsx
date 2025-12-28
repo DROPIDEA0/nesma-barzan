@@ -40,8 +40,8 @@ export default function AdminDashboard() {
       <div className="space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold">{t('admin.dashboard')}</h1>
-          <p className="text-muted-foreground mt-2">
+          <h1 className="text-3xl font-bold text-gray-900">{t('admin.dashboard')}</h1>
+          <p className="text-gray-600 mt-2">
             {lang === 'ar' 
               ? 'مرحباً بك في لوحة تحكم نسمة برزان'
               : 'Welcome to Nesma Barzan Admin Panel'}
@@ -52,9 +52,9 @@ export default function AdminDashboard() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {stats.map((stat) => (
             <Link key={stat.href} href={stat.href}>
-              <Card className="animated-border hover:shadow-lg transition-shadow cursor-pointer">
+              <Card className="bg-white border-2 border-gray-200 hover:border-blue-400 hover:shadow-lg transition-all cursor-pointer">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                  <CardTitle className="text-sm font-medium text-gray-700">
                     {stat.title}
                   </CardTitle>
                   <div className={`p-2 rounded-lg ${stat.color}`}>
@@ -62,7 +62,7 @@ export default function AdminDashboard() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold">{stat.value}</div>
+                  <div className="text-3xl font-bold text-gray-900">{stat.value}</div>
                 </CardContent>
               </Card>
             </Link>
@@ -70,35 +70,35 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <Card>
+        <Card className="bg-white border-2 border-gray-200">
           <CardHeader>
-            <CardTitle>{lang === 'ar' ? 'إجراءات سريعة' : 'Quick Actions'}</CardTitle>
+            <CardTitle className="text-gray-900">{lang === 'ar' ? 'إجراءات سريعة' : 'Quick Actions'}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Link href="/admin/projects">
-                <div className="p-4 animated-border rounded-lg hover:bg-muted transition-colors cursor-pointer">
-                  <FolderKanban className="h-8 w-8 text-primary mb-2" />
-                  <h3 className="font-medium">{lang === 'ar' ? 'إضافة مشروع جديد' : 'Add New Project'}</h3>
-                  <p className="text-sm text-muted-foreground">
+                <div className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
+                  <FolderKanban className="h-8 w-8 text-blue-600 mb-2" />
+                  <h3 className="font-medium text-gray-900">{lang === 'ar' ? 'إضافة مشروع جديد' : 'Add New Project'}</h3>
+                  <p className="text-sm text-gray-600">
                     {lang === 'ar' ? 'أضف مشروعاً جديداً للعرض' : 'Add a new project to display'}
                   </p>
                 </div>
               </Link>
               <Link href="/admin/images">
-                <div className="p-4 animated-border rounded-lg hover:bg-muted transition-colors cursor-pointer">
-                  <Image className="h-8 w-8 text-primary mb-2" />
-                  <h3 className="font-medium">{lang === 'ar' ? 'رفع صورة' : 'Upload Image'}</h3>
-                  <p className="text-sm text-muted-foreground">
+                <div className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
+                  <Image className="h-8 w-8 text-blue-600 mb-2" />
+                  <h3 className="font-medium text-gray-900">{lang === 'ar' ? 'رفع صورة' : 'Upload Image'}</h3>
+                  <p className="text-sm text-gray-600">
                     {lang === 'ar' ? 'ارفع صوراً جديدة للموقع' : 'Upload new images for the site'}
                   </p>
                 </div>
               </Link>
               <Link href="/admin/content">
-                <div className="p-4 animated-border rounded-lg hover:bg-muted transition-colors cursor-pointer">
-                  <FileText className="h-8 w-8 text-primary mb-2" />
-                  <h3 className="font-medium">{lang === 'ar' ? 'تعديل المحتوى' : 'Edit Content'}</h3>
-                  <p className="text-sm text-muted-foreground">
+                <div className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
+                  <FileText className="h-8 w-8 text-blue-600 mb-2" />
+                  <h3 className="font-medium text-gray-900">{lang === 'ar' ? 'تعديل المحتوى' : 'Edit Content'}</h3>
+                  <p className="text-sm text-gray-600">
                     {lang === 'ar' ? 'عدّل نصوص الموقع' : 'Edit site texts'}
                   </p>
                 </div>

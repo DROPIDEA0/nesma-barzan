@@ -11,7 +11,8 @@ import {
   ArrowLeft, 
   LogOut,
   Globe,
-  Menu
+  Menu,
+  Settings
 } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
@@ -31,6 +32,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   const navItems = [
     { href: '/admin', icon: LayoutDashboard, label: t('admin.dashboard') },
+    { href: '/admin/settings', icon: Settings, label: lang === 'ar' ? 'الإعدادات' : 'Settings' },
     { href: '/admin/content', icon: FileText, label: t('admin.content') },
     { href: '/admin/projects', icon: FolderKanban, label: t('admin.projects') },
     { href: '/admin/images', icon: Image, label: t('admin.images') },
@@ -86,14 +88,14 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="p-6 border-b border-sidebar-border">
+      <div className="p-6 border-b-2 border-gray-200">
         <Link href="/" className="flex items-center gap-3">
           <img src="/logo.png" alt="Nesma Barzan" className="h-10 w-auto bg-white rounded p-1" />
           <div>
-            <h1 className="font-bold text-sidebar-foreground">
+            <h1 className="font-bold text-gray-900">
               {lang === 'ar' ? 'نسمة برزان' : 'Nesma Barzan'}
             </h1>
-            <p className="text-xs text-sidebar-foreground/60">{t('admin.title')}</p>
+            <p className="text-xs text-gray-600">{t('admin.title')}</p>
           </div>
         </Link>
       </div>
@@ -109,8 +111,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                 isActive
-                  ? 'bg-sidebar-primary text-sidebar-primary-foreground'
-                  : 'text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
               }`}
             >
               <item.icon className="h-5 w-5" />
@@ -121,17 +123,17 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-sidebar-border space-y-2">
+      <div className="p-4 border-t-2 border-gray-200 space-y-2">
         <Link
           href="/"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
         >
           <ArrowLeft className="h-5 w-5" />
           <span>{lang === 'ar' ? 'العودة للموقع' : 'Back to Site'}</span>
         </Link>
         <button
           onClick={() => logout()}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground/70 hover:bg-destructive/10 hover:text-destructive transition-colors"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors"
         >
           <LogOut className="h-5 w-5" />
           <span>{t('nav.logout')}</span>
@@ -141,37 +143,37 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col bg-sidebar">
+      <aside className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col bg-white border-r-2 border-gray-200">
         <SidebarContent />
       </aside>
 
       {/* Mobile Header */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 h-16 bg-sidebar border-b border-sidebar-border flex items-center justify-between px-4">
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 h-16 bg-white border-b-2 border-gray-200 flex items-center justify-between px-4">
         <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="text-sidebar-foreground">
+            <Button variant="ghost" size="icon" className="text-gray-700">
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
-          <SheetContent side={isRTL ? 'right' : 'left'} className="w-64 p-0 bg-sidebar">
+          <SheetContent side={isRTL ? 'right' : 'left'} className="w-64 p-0 bg-white">
             <SidebarContent />
           </SheetContent>
         </Sheet>
 
         <div className="flex items-center gap-2">
           <img src="/logo.png" alt="Nesma Barzan" className="h-8 w-auto bg-white rounded p-0.5" />
-          <span className="font-bold text-sidebar-foreground">{t('admin.title')}</span>
+          <span className="font-bold text-gray-900">{t('admin.title')}</span>
         </div>
 
-        <Button variant="ghost" size="icon" onClick={toggleLanguage} className="text-sidebar-foreground">
+        <Button variant="ghost" size="icon" onClick={toggleLanguage} className="text-gray-700">
           <Globe className="h-5 w-5" />
         </Button>
       </header>
 
       {/* Main Content */}
-      <main className="lg:ps-64 pt-16 lg:pt-0">
+      <main className="lg:ps-64 pt-16 lg:pt-0 bg-white">
         <div className="p-6 lg:p-8">
           {/* Desktop Language Toggle */}
           <div className="hidden lg:flex justify-end mb-6">

@@ -119,6 +119,193 @@ export const appRouter = router({
       }),
   }),
 
+  // Site Settings Management
+  settings: router({
+    getAll: publicProcedure.query(async () => {
+      return db.getAllSettings();
+    }),
+    
+    getByCategory: publicProcedure
+      .input(z.object({ category: z.string() }))
+      .query(async ({ input }) => {
+        return db.getSettingsByCategory(input.category);
+      }),
+    
+    getByKey: publicProcedure
+      .input(z.object({ key: z.string() }))
+      .query(async ({ input }) => {
+        return db.getSettingByKey(input.key);
+      }),
+    
+    upsert: adminProcedure
+      .input(z.object({
+        key: z.string(),
+        value: z.string().optional(),
+        type: z.enum(["text", "number", "image", "json", "boolean"]),
+        category: z.string(),
+        labelAr: z.string().optional(),
+        labelEn: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        await db.upsertSetting(input);
+        return { success: true };
+      }),
+  }),
+
+  // Navigation Items Management
+  navigation: router({
+    getAll: publicProcedure.query(async () => {
+      return db.getAllNavigationItems();
+    }),
+    
+    getActive: publicProcedure.query(async () => {
+      return db.getActiveNavigationItems();
+    }),
+    
+    create: adminProcedure
+      .input(z.object({
+        labelAr: z.string(),
+        labelEn: z.string(),
+        url: z.string(),
+        sortOrder: z.number().default(0),
+        isActive: z.boolean().default(true),
+        parentId: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const id = await db.createNavigationItem(input);
+        return { id };
+      }),
+    
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        labelAr: z.string().optional(),
+        labelEn: z.string().optional(),
+        url: z.string().optional(),
+        sortOrder: z.number().optional(),
+        isActive: z.boolean().optional(),
+        parentId: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await db.updateNavigationItem(id, data);
+        return { success: true };
+      }),
+    
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteNavigationItem(input.id);
+        return { success: true };
+      }),
+  }),
+
+  // Hero Statistics Management
+  heroStats: router({
+    getAll: publicProcedure.query(async () => {
+      return db.getAllHeroStats();
+    }),
+    
+    getActive: publicProcedure.query(async () => {
+      return db.getActiveHeroStats();
+    }),
+    
+    create: adminProcedure
+      .input(z.object({
+        labelAr: z.string(),
+        labelEn: z.string(),
+        value: z.string(),
+        suffix: z.string().optional(),
+        icon: z.string().optional(),
+        sortOrder: z.number().default(0),
+        isActive: z.boolean().default(true),
+      }))
+      .mutation(async ({ input }) => {
+        const id = await db.createHeroStat(input);
+        return { id };
+      }),
+    
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        labelAr: z.string().optional(),
+        labelEn: z.string().optional(),
+        value: z.string().optional(),
+        suffix: z.string().optional(),
+        icon: z.string().optional(),
+        sortOrder: z.number().optional(),
+        isActive: z.boolean().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await db.updateHeroStat(id, data);
+        return { success: true };
+      }),
+    
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteHeroStat(input.id);
+        return { success: true };
+      }),
+  }),
+
+  // Features Management
+  features: router({
+    getAll: publicProcedure.query(async () => {
+      return db.getAllFeatures();
+    }),
+    
+    getByCategory: publicProcedure
+      .input(z.object({ category: z.enum(["mechanism", "advantage", "revenue"]) }))
+      .query(async ({ input }) => {
+        return db.getFeaturesByCategory(input.category);
+      }),
+    
+    create: adminProcedure
+      .input(z.object({
+        titleAr: z.string(),
+        titleEn: z.string(),
+        descriptionAr: z.string().optional(),
+        descriptionEn: z.string().optional(),
+        value: z.string().optional(),
+        icon: z.string().optional(),
+        category: z.enum(["mechanism", "advantage", "revenue"]),
+        sortOrder: z.number().default(0),
+        isActive: z.boolean().default(true),
+      }))
+      .mutation(async ({ input }) => {
+        const id = await db.createFeature(input);
+        return { id };
+      }),
+    
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        titleAr: z.string().optional(),
+        titleEn: z.string().optional(),
+        descriptionAr: z.string().optional(),
+        descriptionEn: z.string().optional(),
+        value: z.string().optional(),
+        icon: z.string().optional(),
+        category: z.enum(["mechanism", "advantage", "revenue"]).optional(),
+        sortOrder: z.number().optional(),
+        isActive: z.boolean().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await db.updateFeature(id, data);
+        return { success: true };
+      }),
+    
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteFeature(input.id);
+        return { success: true };
+      }),
+  }),
+
   // Images Management
   images: router({
     getAll: publicProcedure.query(async () => {

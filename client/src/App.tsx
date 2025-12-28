@@ -11,6 +11,7 @@ import { Loader2 } from "lucide-react";
 
 // Lazy load admin pages
 const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
+const AdminSettings = lazy(() => import("./pages/admin/Settings"));
 const AdminContent = lazy(() => import("./pages/admin/Content"));
 const AdminProjects = lazy(() => import("./pages/admin/Projects"));
 const AdminImages = lazy(() => import("./pages/admin/Images"));
@@ -29,6 +30,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/admin" component={AdminDashboard} />
+        <Route path="/admin/settings" component={AdminSettings} />
         <Route path="/admin/content" component={AdminContent} />
         <Route path="/admin/projects" component={AdminProjects} />
         <Route path="/admin/images" component={AdminImages} />

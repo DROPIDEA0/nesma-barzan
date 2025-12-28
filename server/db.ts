@@ -188,3 +188,282 @@ export async function deleteImage(id: number) {
   await db.delete(images).where(eq(images.id, id));
   return image[0] || null;
 }
+
+// ============ SITE SETTINGS FUNCTIONS ============
+
+export async function getAllSettings() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    const { siteSettings } = await import("../drizzle/schema");
+    return await db.select().from(siteSettings);
+  } catch (error) {
+    console.error("[Database] Error getting settings:", error);
+    return [];
+  }
+}
+
+export async function getSettingsByCategory(category: string) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    const { siteSettings } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+    return await db.select().from(siteSettings).where(eq(siteSettings.category, category));
+  } catch (error) {
+    console.error("[Database] Error getting settings by category:", error);
+    return [];
+  }
+}
+
+export async function getSettingByKey(key: string) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  try {
+    const { siteSettings } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+    const results = await db.select().from(siteSettings).where(eq(siteSettings.key, key));
+    return results[0] || null;
+  } catch (error) {
+    console.error("[Database] Error getting setting by key:", error);
+    return null;
+  }
+}
+
+export async function upsertSetting(setting: any) {
+  const db = await getDb();
+  if (!db) return;
+  
+  try {
+    const { siteSettings } = await import("../drizzle/schema");
+    await db.insert(siteSettings).values(setting).onDuplicateKeyUpdate({ set: setting });
+  } catch (error) {
+    console.error("[Database] Error upserting setting:", error);
+    throw error;
+  }
+}
+
+// ============ NAVIGATION ITEMS FUNCTIONS ============
+
+export async function getAllNavigationItems() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    const { navigationItems } = await import("../drizzle/schema");
+    const { asc } = await import("drizzle-orm");
+    return await db.select().from(navigationItems).orderBy(asc(navigationItems.sortOrder));
+  } catch (error) {
+    console.error("[Database] Error getting navigation items:", error);
+    return [];
+  }
+}
+
+export async function getActiveNavigationItems() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    const { navigationItems } = await import("../drizzle/schema");
+    const { eq, asc } = await import("drizzle-orm");
+    return await db.select().from(navigationItems)
+      .where(eq(navigationItems.isActive, true))
+      .orderBy(asc(navigationItems.sortOrder));
+  } catch (error) {
+    console.error("[Database] Error getting active navigation items:", error);
+    return [];
+  }
+}
+
+export async function createNavigationItem(item: any) {
+  const db = await getDb();
+  if (!db) return 0;
+  
+  try {
+    const { navigationItems } = await import("../drizzle/schema");
+    const result = await db.insert(navigationItems).values(item);
+    return result[0].insertId;
+  } catch (error) {
+    console.error("[Database] Error creating navigation item:", error);
+    throw error;
+  }
+}
+
+export async function updateNavigationItem(id: number, data: any) {
+  const db = await getDb();
+  if (!db) return;
+  
+  try {
+    const { navigationItems } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+    await db.update(navigationItems).set(data).where(eq(navigationItems.id, id));
+  } catch (error) {
+    console.error("[Database] Error updating navigation item:", error);
+    throw error;
+  }
+}
+
+export async function deleteNavigationItem(id: number) {
+  const db = await getDb();
+  if (!db) return;
+  
+  try {
+    const { navigationItems } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+    await db.delete(navigationItems).where(eq(navigationItems.id, id));
+  } catch (error) {
+    console.error("[Database] Error deleting navigation item:", error);
+    throw error;
+  }
+}
+
+// ============ HERO STATS FUNCTIONS ============
+
+export async function getAllHeroStats() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    const { heroStats } = await import("../drizzle/schema");
+    const { asc } = await import("drizzle-orm");
+    return await db.select().from(heroStats).orderBy(asc(heroStats.sortOrder));
+  } catch (error) {
+    console.error("[Database] Error getting hero stats:", error);
+    return [];
+  }
+}
+
+export async function getActiveHeroStats() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    const { heroStats } = await import("../drizzle/schema");
+    const { eq, asc } = await import("drizzle-orm");
+    return await db.select().from(heroStats)
+      .where(eq(heroStats.isActive, true))
+      .orderBy(asc(heroStats.sortOrder));
+  } catch (error) {
+    console.error("[Database] Error getting active hero stats:", error);
+    return [];
+  }
+}
+
+export async function createHeroStat(stat: any) {
+  const db = await getDb();
+  if (!db) return 0;
+  
+  try {
+    const { heroStats } = await import("../drizzle/schema");
+    const result = await db.insert(heroStats).values(stat);
+    return result[0].insertId;
+  } catch (error) {
+    console.error("[Database] Error creating hero stat:", error);
+    throw error;
+  }
+}
+
+export async function updateHeroStat(id: number, data: any) {
+  const db = await getDb();
+  if (!db) return;
+  
+  try {
+    const { heroStats } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+    await db.update(heroStats).set(data).where(eq(heroStats.id, id));
+  } catch (error) {
+    console.error("[Database] Error updating hero stat:", error);
+    throw error;
+  }
+}
+
+export async function deleteHeroStat(id: number) {
+  const db = await getDb();
+  if (!db) return;
+  
+  try {
+    const { heroStats } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+    await db.delete(heroStats).where(eq(heroStats.id, id));
+  } catch (error) {
+    console.error("[Database] Error deleting hero stat:", error);
+    throw error;
+  }
+}
+
+// ============ FEATURES FUNCTIONS ============
+
+export async function getAllFeatures() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    const { features } = await import("../drizzle/schema");
+    const { asc } = await import("drizzle-orm");
+    return await db.select().from(features).orderBy(asc(features.sortOrder));
+  } catch (error) {
+    console.error("[Database] Error getting features:", error);
+    return [];
+  }
+}
+
+export async function getFeaturesByCategory(category: string) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    const { features } = await import("../drizzle/schema");
+    const { eq, asc } = await import("drizzle-orm");
+    return await db.select().from(features)
+      .where(eq(features.category, category))
+      .orderBy(asc(features.sortOrder));
+  } catch (error) {
+    console.error("[Database] Error getting features by category:", error);
+    return [];
+  }
+}
+
+export async function createFeature(feature: any) {
+  const db = await getDb();
+  if (!db) return 0;
+  
+  try {
+    const { features } = await import("../drizzle/schema");
+    const result = await db.insert(features).values(feature);
+    return result[0].insertId;
+  } catch (error) {
+    console.error("[Database] Error creating feature:", error);
+    throw error;
+  }
+}
+
+export async function updateFeature(id: number, data: any) {
+  const db = await getDb();
+  if (!db) return;
+  
+  try {
+    const { features } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+    await db.update(features).set(data).where(eq(features.id, id));
+  } catch (error) {
+    console.error("[Database] Error updating feature:", error);
+    throw error;
+  }
+}
+
+export async function deleteFeature(id: number) {
+  const db = await getDb();
+  if (!db) return;
+  
+  try {
+    const { features } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+    await db.delete(features).where(eq(features.id, id));
+  } catch (error) {
+    console.error("[Database] Error deleting feature:", error);
+    throw error;
+  }
+}

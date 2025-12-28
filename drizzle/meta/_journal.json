@@ -15,6 +15,13 @@
       "when": 1766867631942,
       "tag": "0001_cool_wendigo",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1766954490734,
+      "tag": "0002_wandering_banshee",
+      "breakpoints": true
     }
   ]
 }

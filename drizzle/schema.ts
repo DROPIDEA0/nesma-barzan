@@ -73,3 +73,79 @@ export const images = mysqlTable("images", {
 
 export type Image = typeof images.$inferSelect;
 export type InsertImage = typeof images.$inferInsert;
+
+/**
+ * Site settings table for general site configuration
+ */
+export const siteSettings = mysqlTable("site_settings", {
+  id: int("id").autoincrement().primaryKey(),
+  key: varchar("key", { length: 100 }).notNull().unique(),
+  value: text("value"),
+  type: mysqlEnum("type", ["text", "number", "image", "json", "boolean"]).default("text").notNull(),
+  category: varchar("category", { length: 50 }).notNull(),
+  labelAr: varchar("labelAr", { length: 255 }),
+  labelEn: varchar("labelEn", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SiteSetting = typeof siteSettings.$inferSelect;
+export type InsertSiteSetting = typeof siteSettings.$inferInsert;
+
+/**
+ * Navigation items table for header menu management
+ */
+export const navigationItems = mysqlTable("navigation_items", {
+  id: int("id").autoincrement().primaryKey(),
+  labelAr: varchar("labelAr", { length: 100 }).notNull(),
+  labelEn: varchar("labelEn", { length: 100 }).notNull(),
+  url: varchar("url", { length: 255 }).notNull(),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  isActive: boolean("isActive").default(true).notNull(),
+  parentId: int("parentId"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type NavigationItem = typeof navigationItems.$inferSelect;
+export type InsertNavigationItem = typeof navigationItems.$inferInsert;
+
+/**
+ * Hero statistics table for homepage stats
+ */
+export const heroStats = mysqlTable("hero_stats", {
+  id: int("id").autoincrement().primaryKey(),
+  labelAr: varchar("labelAr", { length: 100 }).notNull(),
+  labelEn: varchar("labelEn", { length: 100 }).notNull(),
+  value: varchar("value", { length: 50 }).notNull(),
+  suffix: varchar("suffix", { length: 10 }),
+  icon: varchar("icon", { length: 50 }),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type HeroStat = typeof heroStats.$inferSelect;
+export type InsertHeroStat = typeof heroStats.$inferInsert;
+
+/**
+ * Features table for project features, mechanisms, and advantages
+ */
+export const features = mysqlTable("features", {
+  id: int("id").autoincrement().primaryKey(),
+  titleAr: varchar("titleAr", { length: 255 }).notNull(),
+  titleEn: varchar("titleEn", { length: 255 }).notNull(),
+  descriptionAr: text("descriptionAr"),
+  descriptionEn: text("descriptionEn"),
+  value: varchar("value", { length: 100 }),
+  icon: varchar("icon", { length: 50 }),
+  category: mysqlEnum("category", ["mechanism", "advantage", "revenue"]).notNull(),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Feature = typeof features.$inferSelect;
+export type InsertFeature = typeof features.$inferInsert;
