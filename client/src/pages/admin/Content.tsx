@@ -88,14 +88,14 @@ export default function AdminContent() {
         {/* Header */}
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold">{t('admin.content')}</h1>
-            <p className="text-muted-foreground mt-2">
+            <h1 className="text-3xl font-bold text-gray-900">{t('admin.content')}</h1>
+            <p className="text-gray-600 mt-2">
               {lang === 'ar' ? 'إدارة محتوى الموقع' : 'Manage site content'}
             </p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="gradient-gold text-white border-0">
+              <Button className="bg-gradient-to-r from-[#c8a870] to-[#d4b886] text-white border-0 hover:from-[#b89860] hover:to-[#c8a870]">
                 <Plus className="h-4 w-4 me-2" />
                 {t('admin.add')}
               </Button>
@@ -181,17 +181,18 @@ export default function AdminContent() {
         {/* Content List */}
         {isLoading ? (
           <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#c8a870] mx-auto"></div>
+            <p className="text-gray-600 mt-4">{lang === 'ar' ? 'جاري التحميل...' : 'Loading...'}</p>
           </div>
         ) : content && content.length > 0 ? (
           <div className="grid gap-6">
             {content.map((item) => (
-              <Card key={item.id}>
+              <Card key={item.id} className="bg-white border-2 border-gray-200">
                 <CardHeader>
                   <div className="flex justify-between items-start">
                     <div>
-                      <CardTitle className="text-lg">{item.key}</CardTitle>
-                      <p className="text-sm text-muted-foreground">{lang === 'ar' ? 'القسم:' : 'Section:'} {item.section}</p>
+                      <CardTitle className="text-lg text-gray-900">{item.key}</CardTitle>
+                      <p className="text-sm text-gray-600">{lang === 'ar' ? 'القسم:' : 'Section:'} {item.section}</p>
                     </div>
                     <Button
                       variant="outline"
@@ -260,9 +261,9 @@ export default function AdminContent() {
             ))}
           </div>
         ) : (
-          <Card>
+          <Card className="bg-white border-2 border-gray-200">
             <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 {lang === 'ar' ? 'لا يوجد محتوى بعد' : 'No content yet'}
               </p>
             </CardContent>

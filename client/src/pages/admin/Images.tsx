@@ -110,16 +110,16 @@ export default function AdminImages() {
       <div className="space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold">{t('admin.images')}</h1>
-          <p className="text-muted-foreground mt-2">
+          <h1 className="text-3xl font-bold text-gray-900">{t('admin.images')}</h1>
+          <p className="text-gray-600 mt-2">
             {lang === 'ar' ? 'رفع وإدارة صور الموقع' : 'Upload and manage site images'}
           </p>
         </div>
 
         {/* Upload Section */}
-        <Card>
+        <Card className="bg-white border-2 border-gray-200">
           <CardContent className="p-6">
-            <h2 className="text-lg font-bold mb-4">{lang === 'ar' ? 'رفع صورة جديدة' : 'Upload New Image'}</h2>
+            <h2 className="text-lg font-bold text-gray-900 mb-4">{lang === 'ar' ? 'رفع صورة جديدة' : 'Upload New Image'}</h2>
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1">
@@ -163,7 +163,7 @@ export default function AdminImages() {
               <Button
                 onClick={handleUpload}
                 disabled={!selectedFile || uploadMutation.isPending}
-                className="gradient-gold text-white border-0"
+                className="bg-gradient-to-r from-[#c8a870] to-[#d4b886] text-white border-0 hover:from-[#b89860] hover:to-[#c8a870]"
               >
                 {uploadMutation.isPending ? (
                   <Loader2 className="h-4 w-4 me-2 animate-spin" />
@@ -178,25 +178,26 @@ export default function AdminImages() {
 
         {/* Images Grid */}
         <div>
-          <h2 className="text-lg font-bold mb-4">
+          <h2 className="text-lg font-bold text-gray-900 mb-4">
             {lang === 'ar' ? 'الصور المرفوعة' : 'Uploaded Images'} ({images?.length || 0})
           </h2>
           
           {isLoading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#c8a870] mx-auto"></div>
+              <p className="text-gray-600 mt-4">{lang === 'ar' ? 'جاري التحميل...' : 'Loading...'}</p>
             </div>
           ) : images && images.length > 0 ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {images.map((image) => (
-                <Card key={image.id} className="overflow-hidden group">
+                <Card key={image.id} className="overflow-hidden group bg-white border-2 border-gray-200">
                   <div className="aspect-video relative">
                     <img
                       src={image.url}
                       alt={lang === 'ar' ? image.altTextAr || image.filename : image.altTextEn || image.filename}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <Button variant="destructive" size="sm">
@@ -228,8 +229,8 @@ export default function AdminImages() {
                     </div>
                   </div>
                   <CardContent className="p-3">
-                    <p className="text-sm font-medium truncate">{image.filename}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-sm font-medium text-gray-900 truncate">{image.filename}</p>
+                    <p className="text-xs text-gray-600">
                       {formatFileSize(image.size)} • {image.mimeType?.split('/')[1]?.toUpperCase()}
                     </p>
                   </CardContent>
@@ -237,10 +238,10 @@ export default function AdminImages() {
               ))}
             </div>
           ) : (
-            <Card>
+            <Card className="bg-white border-2 border-gray-200">
               <CardContent className="py-12 text-center">
-                <ImageIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">
+                <ImageIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600">
                   {lang === 'ar' ? 'لا توجد صور بعد' : 'No images yet'}
                 </p>
               </CardContent>

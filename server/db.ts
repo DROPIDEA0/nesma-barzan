@@ -1,20 +1,27 @@
-import { eq, asc, desc } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, siteContent, InsertSiteContent, projects, InsertProject, images, InsertImage } from "../drizzle/schema";
 import { ENV } from './_core/env';
+import { eq, asc, desc } from 'drizzle-orm';
 
-let _db: ReturnType<typeof drizzle> | null = null;
+// Import MySQL or SQLite based on environment
+let db: any;
+
+if (process.env.NODE_ENV === 'production' && process.env.DATABASE_URL?.startsWith('mysql://')) {
+  // Use MySQL in production
+  console.log('[Database] Initializing MySQL for production');
+  const { initializeMySQL } = require('./db-mysql');
+  initializeMySQL().then((mysqlDb: any) => {
+    db = mysqlDb;
+    console.log('[Database] MySQL connected');
+  });
+} else {
+  // Use SQLite for development
+  console.log('[Database] Using SQLite for development');
+  const { db: sqliteDb } = require('./db-sqlite');
+  db = sqliteDb;
+}
 
 export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
-    try {
-      _db = drizzle(process.env.DATABASE_URL);
-    } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
-      _db = null;
-    }
-  }
-  return _db;
+  return db;
 }
 
 // ============ USER FUNCTIONS ============
@@ -69,9 +76,11 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       updateSet.lastSignedIn = new Date();
     }
 
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
-      set: updateSet,
-    });
+    await db.insert(users).values(values)
+      .onConflictDoUpdate({
+        target: users.openId,
+        set: updateSet,
+      });
   } catch (error) {
     console.error("[Database] Failed to upsert user:", error);
     throw error;
@@ -115,15 +124,17 @@ export async function upsertSiteContent(data: InsertSiteContent) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
-  await db.insert(siteContent).values(data).onDuplicateKeyUpdate({
-    set: {
-      titleAr: data.titleAr,
-      titleEn: data.titleEn,
-      contentAr: data.contentAr,
-      contentEn: data.contentEn,
-      section: data.section,
-    },
-  });
+  await db.insert(siteContent).values(data)
+    .onConflictDoUpdate({
+      target: siteContent.key,
+      set: {
+        titleAr: data.titleAr,
+        titleEn: data.titleEn,
+        contentAr: data.contentAr,
+        contentEn: data.contentEn,
+        section: data.section,
+      },
+    });
 }
 
 // ============ PROJECTS FUNCTIONS ============
@@ -239,7 +250,13 @@ export async function upsertSetting(setting: any) {
   
   try {
     const { siteSettings } = await import("../drizzle/schema");
-    await db.insert(siteSettings).values(setting).onDuplicateKeyUpdate({ set: setting });
+    // Don't include timestamps, let SQLite handle them with DEFAULT values
+    const { createdAt, updatedAt, ...cleanSetting } = setting;
+    await db.insert(siteSettings).values(cleanSetting as any)
+      .onConflictDoUpdate({
+        target: siteSettings.key,
+        set: cleanSetting as any,
+      });
   } catch (error) {
     console.error("[Database] Error upserting setting:", error);
     throw error;

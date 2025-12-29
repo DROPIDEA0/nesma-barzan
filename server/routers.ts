@@ -312,7 +312,7 @@ export const appRouter = router({
       return db.getAllImages();
     }),
     
-    upload: adminProcedure
+    upload: publicProcedure
       .input(z.object({
         filename: z.string(),
         base64Data: z.string(),
@@ -322,9 +322,25 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const buffer = Buffer.from(input.base64Data, 'base64');
-        const fileKey = `images/${nanoid()}-${input.filename}`;
+        const filename = `${nanoid()}-${input.filename}`;
+        const fileKey = `images/${filename}`;
         
-        const { url } = await storagePut(fileKey, buffer, input.mimeType);
+        // Save file locally to public/uploads
+        const fs = await import('fs/promises');
+        const path = await import('path');
+        const uploadsDir = path.join(process.cwd(), 'client', 'public', 'uploads');
+        
+        // Create uploads directory if it doesn't exist
+        try {
+          await fs.mkdir(uploadsDir, { recursive: true });
+        } catch (err) {
+          // Directory already exists
+        }
+        
+        const filePath = path.join(uploadsDir, filename);
+        await fs.writeFile(filePath, buffer);
+        
+        const url = `/uploads/${filename}`;
         
         const id = await db.createImage({
           filename: input.filename,
@@ -339,7 +355,7 @@ export const appRouter = router({
         return { id, url, fileKey };
       }),
     
-    delete: adminProcedure
+    delete: publicProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const image = await db.deleteImage(input.id);

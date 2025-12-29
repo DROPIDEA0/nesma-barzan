@@ -17,21 +17,21 @@ export default function AdminDashboard() {
       value: content?.length || 0,
       icon: FileText,
       href: '/admin/content',
-      color: 'bg-blue-500',
+      color: 'bg-gradient-to-br from-[#c8a870] to-[#d4b886]',
     },
     {
       title: t('admin.projects'),
       value: projects?.length || 0,
       icon: FolderKanban,
       href: '/admin/projects',
-      color: 'bg-green-500',
+      color: 'bg-gradient-to-br from-[#c8a870] to-[#d4b886]',
     },
     {
       title: t('admin.images'),
       value: images?.length || 0,
       icon: Image,
       href: '/admin/images',
-      color: 'bg-purple-500',
+      color: 'bg-gradient-to-br from-[#c8a870] to-[#d4b886]',
     },
   ];
 
@@ -52,7 +52,7 @@ export default function AdminDashboard() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {stats.map((stat) => (
             <Link key={stat.href} href={stat.href}>
-              <Card className="bg-white border-2 border-gray-200 hover:border-blue-400 hover:shadow-lg transition-all cursor-pointer">
+              <Card className="bg-white border-2 border-gray-200 hover:border-[#c8a870] hover:shadow-xl transition-all cursor-pointer group">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-sm font-medium text-gray-700">
                     {stat.title}
@@ -77,8 +77,8 @@ export default function AdminDashboard() {
           <CardContent>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Link href="/admin/projects">
-                <div className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
-                  <FolderKanban className="h-8 w-8 text-blue-600 mb-2" />
+                <div className="p-4 border-2 border-gray-200 rounded-lg hover:border-[#c8a870] hover:bg-gradient-to-br hover:from-[#faf7f2] hover:to-[#f5f0e8] transition-all cursor-pointer group">
+                  <FolderKanban className="h-8 w-8 text-[#c8a870] mb-2 group-hover:scale-110 transition-transform" />
                   <h3 className="font-medium text-gray-900">{lang === 'ar' ? 'إضافة مشروع جديد' : 'Add New Project'}</h3>
                   <p className="text-sm text-gray-600">
                     {lang === 'ar' ? 'أضف مشروعاً جديداً للعرض' : 'Add a new project to display'}
@@ -86,8 +86,8 @@ export default function AdminDashboard() {
                 </div>
               </Link>
               <Link href="/admin/images">
-                <div className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
-                  <Image className="h-8 w-8 text-blue-600 mb-2" />
+                <div className="p-4 border-2 border-gray-200 rounded-lg hover:border-[#c8a870] hover:bg-gradient-to-br hover:from-[#faf7f2] hover:to-[#f5f0e8] transition-all cursor-pointer group">
+                  <Image className="h-8 w-8 text-[#c8a870] mb-2 group-hover:scale-110 transition-transform" />
                   <h3 className="font-medium text-gray-900">{lang === 'ar' ? 'رفع صورة' : 'Upload Image'}</h3>
                   <p className="text-sm text-gray-600">
                     {lang === 'ar' ? 'ارفع صوراً جديدة للموقع' : 'Upload new images for the site'}
@@ -95,8 +95,8 @@ export default function AdminDashboard() {
                 </div>
               </Link>
               <Link href="/admin/content">
-                <div className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
-                  <FileText className="h-8 w-8 text-blue-600 mb-2" />
+                <div className="p-4 border-2 border-gray-200 rounded-lg hover:border-[#c8a870] hover:bg-gradient-to-br hover:from-[#faf7f2] hover:to-[#f5f0e8] transition-all cursor-pointer group">
+                  <FileText className="h-8 w-8 text-[#c8a870] mb-2 group-hover:scale-110 transition-transform" />
                   <h3 className="font-medium text-gray-900">{lang === 'ar' ? 'تعديل المحتوى' : 'Edit Content'}</h3>
                   <p className="text-sm text-gray-600">
                     {lang === 'ar' ? 'عدّل نصوص الموقع' : 'Edit site texts'}

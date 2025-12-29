@@ -150,7 +150,7 @@ export default function AdminProjects() {
             </div>
           ))}
           {(!images || images.length === 0) && (
-            <p className="col-span-3 text-center text-muted-foreground py-8">
+            <p className="col-span-3 text-center text-gray-600 py-8">
               {lang === 'ar' ? 'لا توجد صور. ارفع صوراً من صفحة إدارة الصور.' : 'No images. Upload images from the Images page.'}
             </p>
           )}
@@ -165,14 +165,14 @@ export default function AdminProjects() {
         {/* Header */}
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold">{t('admin.projects')}</h1>
-            <p className="text-muted-foreground mt-2">
+            <h1 className="text-3xl font-bold text-gray-900">{t('admin.projects')}</h1>
+            <p className="text-gray-600 mt-2">
               {lang === 'ar' ? 'إدارة مشاريع الشركة' : 'Manage company projects'}
             </p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="gradient-gold text-white border-0">
+              <Button className="bg-gradient-to-r from-[#c8a870] to-[#d4b886] text-white border-0 hover:from-[#b89860] hover:to-[#c8a870]">
                 <Plus className="h-4 w-4 me-2" />
                 {t('admin.add')}
               </Button>
@@ -261,7 +261,8 @@ export default function AdminProjects() {
         {/* Projects List */}
         {isLoading ? (
           <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#c8a870] mx-auto"></div>
+            <p className="text-gray-600 mt-4">{lang === 'ar' ? 'جاري التحميل...' : 'Loading...'}</p>
           </div>
         ) : projects && projects.length > 0 ? (
           <div className="grid gap-6">
@@ -280,14 +281,14 @@ export default function AdminProjects() {
                           <h3 className="text-lg font-bold">
                             {lang === 'ar' ? project.titleAr : project.titleEn}
                           </h3>
-                          <p className="text-sm text-muted-foreground mt-1">
+                          <p className="text-sm text-gray-600 mt-1">
                             {lang === 'ar' ? project.descriptionAr : project.descriptionEn}
                           </p>
                           <div className="flex items-center gap-4 mt-2">
                             <span className={`text-xs px-2 py-1 rounded ${project.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
                               {project.isActive ? (lang === 'ar' ? 'نشط' : 'Active') : (lang === 'ar' ? 'غير نشط' : 'Inactive')}
                             </span>
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-xs text-gray-600">
                               {lang === 'ar' ? 'الترتيب:' : 'Order:'} {project.sortOrder}
                             </span>
                           </div>
@@ -337,9 +338,9 @@ export default function AdminProjects() {
             ))}
           </div>
         ) : (
-          <Card>
+          <Card className="bg-white border-2 border-gray-200">
             <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 {lang === 'ar' ? 'لا توجد مشاريع بعد' : 'No projects yet'}
               </p>
             </CardContent>

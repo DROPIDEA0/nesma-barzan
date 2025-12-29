@@ -8,6 +8,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
 import { lazy, Suspense } from "react";
 import { Loader2 } from "lucide-react";
+import { Preloader } from "./components/Preloader";
 
 // Lazy load admin pages
 const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
@@ -44,6 +45,7 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
+      <Preloader />
       <ThemeProvider defaultTheme="light">
         <LanguageProvider>
           <TooltipProvider>

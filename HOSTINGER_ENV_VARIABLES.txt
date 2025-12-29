@@ -1,0 +1,44 @@
+# ============================================
+# Environment Variables for Hostinger
+# نسخ هذه المتغيرات إلى Hostinger Dashboard
+# ============================================
+
+# Database Configuration (MySQL)
+DATABASE_URL=mysql://u521934522_nasma_db_new:uRo2hz3yf0|@localhost:3306/u521934522_nasma_db
+
+# Session Secret (غيّره في الإنتاج)
+SESSION_SECRET=nesma-barzan-production-secret-2025-change-this
+
+# OAuth Settings (Manus)
+OAUTH_SERVER_URL=https://oauth.manus.im
+OAUTH_CLIENT_ID=nesma-barzan-prod
+OAUTH_CLIENT_SECRET=prod-secret-key-change-this
+OAUTH_REDIRECT_URI=https://mediumturquoise-dotterel-343079.hostingersite.com/api/auth/callback
+
+# Node Environment
+NODE_ENV=production
+
+# Server Port (Hostinger يحدده تلقائياً)
+PORT=3000
+
+# ============================================
+# ملاحظات مهمة:
+# ============================================
+# 1. DATABASE_URL يحتوي على معلومات قاعدة البيانات من Hostinger
+# 2. SESSION_SECRET يجب تغييره إلى قيمة عشوائية قوية
+# 3. OAUTH_REDIRECT_URI يجب تحديثه عند ربط Domain الدائم
+# 4. PORT قد لا يكون مطلوباً - Hostinger يديره تلقائياً
+# ============================================
+
+# ============================================
+# كيفية إضافة المتغيرات في Hostinger:
+# ============================================
+# 1. اذهب إلى: Websites > mediumturquoise-dotterel-343079
+# 2. اضغط على: Settings and redeploy
+# 3. في قسم "Environment Variables" اضغط "Add variable"
+# 4. أضف كل متغير على حدة:
+#    - Name: DATABASE_URL
+#    - Value: mysql://u521934522_nasma_db_new:uRo2hz3yf0|@localhost:3306/u521934522_nasma_db
+# 5. كرر لجميع المتغيرات
+# 6. اضغط "Save" ثم "Redeploy"
+# ============================================
