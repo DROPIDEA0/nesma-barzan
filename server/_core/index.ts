@@ -49,7 +49,7 @@ async function startServer() {
   registerOAuthRoutes(app);
   
   // Setup endpoint for database initialization
-  app.post("/api/setup-database", express.json(), async (req, res) => {
+  app.post("/api/setup-database", async (req, res) => {
     try {
       const { setupAdmin } = await import("../setup-admin");
       const result = await setupAdmin(req.body.secretKey);
