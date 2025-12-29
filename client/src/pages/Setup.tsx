@@ -8,7 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 export default function Setup() {
   const [secretKey, setSecretKey] = useState("");
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState(null);
 
   const handleSetup = async () => {
     if (!secretKey) {
@@ -23,16 +23,13 @@ export default function Setup() {
     setResult(null);
 
     try {
-      // استخدام fetch مع batch=1 و input JSON encoded
-      const response = await fetch('/api/trpc/setup?batch=1', {
+      const response = await fetch('/api/setup-database', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "0": {
-            secretKey
-          }
+          secretKey
         }),
       });
 
@@ -43,24 +40,8 @@ export default function Setup() {
       const data = await response.json();
       
       console.log("Response data:", data);
-      
-      // TRPC batch يرجع array
-      if (Array.isArray(data) && data[0]) {
-        if (data[0].result && data[0].result.data) {
-          setResult(data[0].result.data);
-        } else if (data[0].error) {
-          setResult({
-            success: false,
-            message: data[0].error.message || "حدث خطأ أثناء الإعداد"
-          });
-        }
-      } else {
-        setResult({
-          success: false,
-          message: "استجابة غير متوقعة من الخادم"
-        });
-      }
-    } catch (error: any) {
+      setResult(data);
+    } catch (error) {
       console.error("Setup error:", error);
       setResult({
         success: false,
@@ -116,7 +97,7 @@ export default function Setup() {
                   {result.details && result.details.length > 0 && (
                     <div className="mt-4 space-y-1 text-sm">
                       <p className="font-semibold">التفاصيل:</p>
-                      {result.details.map((detail: string, index: number) => (
+                      {result.details.map((detail, index) => (
                         <p key={index} className="font-mono text-xs">
                           {detail}
                         </p>

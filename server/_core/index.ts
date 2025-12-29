@@ -47,6 +47,20 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  
+  // Setup endpoint for database initialization
+  app.post("/api/setup-database", express.json(), async (req, res) => {
+    try {
+      const { setupAdmin } = await import("../setup-admin");
+      const result = await setupAdmin(req.body.secretKey);
+      res.json(result);
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: error.message || "Setup failed"
+      });
+    }
+  });
   // tRPC API
   app.use(
     "/api/trpc",
