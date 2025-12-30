@@ -23,6 +23,27 @@ const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
 export const appRouter = router({
   system: systemRouter,
   
+  // Debug endpoint to test database connection
+  testDb: publicProcedure.query(async () => {
+    try {
+      const database = await db.getDb();
+      if (!database) {
+        return { success: false, error: 'Database is null', env: process.env.NODE_ENV };
+      }
+      
+      const allUsers = await database.select({ id: users.id, username: users.username, role: users.role }).from(users);
+      return { 
+        success: true, 
+        env: process.env.NODE_ENV,
+        dbType: 'connected',
+        usersCount: allUsers.length,
+        users: allUsers
+      };
+    } catch (error: any) {
+      return { success: false, error: error.message, stack: error.stack, env: process.env.NODE_ENV };
+    }
+  }),
+  
   // Manual setup endpoint
   setup: publicProcedure
     .input(z.object({
