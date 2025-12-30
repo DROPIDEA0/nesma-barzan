@@ -98,7 +98,10 @@ async function migrateSQLiteDatabase(db: any) {
   console.log("🔧 Running SQLite migration...");
 
   const Database = require('better-sqlite3');
-  const dbPath = './local.db';
+  const path = require('path');
+  // Use the same path as db-sqlite.ts
+  const dbPath = path.join(process.cwd(), 'local.db');
+  console.log(`📂 Database path: ${dbPath}`);
   const sqlite = new Database(dbPath);
 
   try {
