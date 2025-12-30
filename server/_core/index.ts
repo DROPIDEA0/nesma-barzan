@@ -76,15 +76,15 @@ async function startServer() {
     serveStatic(app);
   }
 
-  const preferredPort = parseInt(process.env.PORT || "3000");
-  const port = await findAvailablePort(preferredPort);
+  // In production (Hostinger), use the exact PORT provided by the environment
+  // In development, find an available port starting from 3000
+  const port = process.env.NODE_ENV === "production" 
+    ? parseInt(process.env.PORT || "3000")
+    : await findAvailablePort(parseInt(process.env.PORT || "3000"));
 
-  if (port !== preferredPort) {
-    console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
-  }
-
-  server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}/`);
+  server.listen(port, "0.0.0.0", () => {
+    console.log(`Server running on port ${port}`);
+    console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
   });
 }
 
