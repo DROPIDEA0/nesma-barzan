@@ -41,10 +41,21 @@ export const appRouter = router({
   
   // Debug endpoint to test database connection
   testDb: publicProcedure.query(async () => {
+    // Import ENV for debugging
+    const { ENV } = await import('./_core/env');
+    
+    const dbConfig = {
+      DB_HOST: process.env.DB_HOST || ENV.DB_HOST,
+      DB_PORT: process.env.DB_PORT || ENV.DB_PORT,
+      DB_USER: process.env.DB_USER || ENV.DB_USER,
+      DB_NAME: process.env.DB_NAME || ENV.DB_NAME,
+      hasPassword: !!(process.env.DB_PASSWORD || ENV.DB_PASSWORD),
+    };
+    
     try {
       const database = await db.getDb();
       if (!database) {
-        return { success: false, error: 'Database is null', env: process.env.NODE_ENV };
+        return { success: false, error: 'Database is null', env: process.env.NODE_ENV, dbConfig };
       }
       
       const allUsers = await database.select({ id: users.id, username: users.username, role: users.role }).from(users);
@@ -53,10 +64,11 @@ export const appRouter = router({
         env: process.env.NODE_ENV,
         dbType: 'connected',
         usersCount: allUsers.length,
-        users: allUsers
+        users: allUsers,
+        dbConfig
       };
     } catch (error: any) {
-      return { success: false, error: error.message, stack: error.stack, env: process.env.NODE_ENV };
+      return { success: false, error: error.message, stack: error.stack, env: process.env.NODE_ENV, dbConfig };
     }
   }),
   

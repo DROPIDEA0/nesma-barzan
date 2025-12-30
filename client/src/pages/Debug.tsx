@@ -17,6 +17,13 @@ interface DbTestResult {
   dbType?: string;
   usersCount?: number;
   users?: Array<{ id: number; username: string | null; role: string }>;
+  dbConfig?: {
+    DB_HOST: string;
+    DB_PORT: string;
+    DB_USER: string;
+    DB_NAME: string;
+    hasPassword: boolean;
+  };
 }
 
 export default function Debug() {
@@ -148,6 +155,18 @@ export default function Debug() {
                 {dbResult.usersCount !== undefined && (
                   <div>
                     <strong>عدد المستخدمين:</strong> {dbResult.usersCount}
+                  </div>
+                )}
+                {dbResult.dbConfig && (
+                  <div className="col-span-2">
+                    <strong>إعدادات الاتصال:</strong>
+                    <div className="mt-2 p-2 bg-blue-50 rounded text-xs">
+                      <div>Host: {dbResult.dbConfig.DB_HOST}</div>
+                      <div>Port: {dbResult.dbConfig.DB_PORT}</div>
+                      <div>User: {dbResult.dbConfig.DB_USER}</div>
+                      <div>Database: {dbResult.dbConfig.DB_NAME}</div>
+                      <div>Password: {dbResult.dbConfig.hasPassword ? '✅ موجود' : '❌ غير موجود'}</div>
+                    </div>
                   </div>
                 )}
                 {dbResult.error && (
