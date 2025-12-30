@@ -78,20 +78,5 @@ export async function migrateDatabase() {
   }
 }
 
-// تشغيل Migration عند استيراد الملف مباشرة
-if (require.main === module) {
-  migrateDatabase()
-    .then((success) => {
-      if (success) {
-        console.log("🎉 Migration finished!");
-        process.exit(0);
-      } else {
-        console.error("💥 Migration failed!");
-        process.exit(1);
-      }
-    })
-    .catch((error) => {
-      console.error("💥 Unexpected error:", error);
-      process.exit(1);
-    });
-}
+// Migration is called automatically from server/_core/index.ts
+// No need to run it when this file is imported directly
