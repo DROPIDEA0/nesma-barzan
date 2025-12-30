@@ -43,30 +43,8 @@ export const appRouter = router({
       .mutation(async ({ input, ctx }) => {
         console.log('[Login] Attempting login for username:', input.username);
         
-        // Simple fallback authentication for admin
-        if (input.username === 'admin' && input.password === 'admin123') {
-          console.log('[Login] Using fallback admin credentials');
-          const fallbackUser = {
-            id: 1,
-            username: 'admin',
-            name: 'Administrator',
-            email: 'admin@nesmabarzan.com',
-            role: 'admin' as const,
-            loginMethod: 'password',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            lastSignedIn: new Date(),
-          };
-          
-          // Set session cookie
-          const cookieOptions = getSessionCookieOptions(ctx.req);
-          ctx.res.cookie(COOKIE_NAME, JSON.stringify(fallbackUser), cookieOptions);
-          console.log('[Login] Fallback login successful');
-          return { success: true, user: fallbackUser };
-        }
-        
-        // Try database authentication
-        console.log('[Login] Trying database authentication');
+        // Database authentication only
+        console.log('[Login] Authenticating against database...');
         const user = await authenticateUser(input.username, input.password);
         
         if (!user) {

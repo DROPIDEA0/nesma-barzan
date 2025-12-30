@@ -31,6 +31,20 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
+  console.log('[Server] Starting server initialization...');
+  
+  // Wait for database to be ready
+  console.log('[Server] Waiting for database connection...');
+  const { getDb } = await import('../db');
+  const database = await getDb();
+  
+  if (!database) {
+    console.error('[Server] Failed to connect to database, server cannot start');
+    process.exit(1);
+  }
+  
+  console.log('[Server] Database connected successfully');
+  
   // Run database migration first
   await migrateDatabase();
   

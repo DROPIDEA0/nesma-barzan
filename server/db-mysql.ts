@@ -6,6 +6,22 @@ import { users, siteSettings, siteContent, projects, images } from '../drizzle/s
 let db: ReturnType<typeof drizzle> | null = null;
 let connection: mysql.Connection | null = null;
 
+// Test MySQL connection
+export async function testMySQLConnection(config: any) {
+  console.log('[MySQL] Testing connection...');
+  try {
+    const testConnection = await mysql.createConnection(config);
+    // Test with a simple query
+    await testConnection.query('SELECT 1');
+    await testConnection.end();
+    console.log('[MySQL] Connection test successful ✓');
+    return true;
+  } catch (error) {
+    console.error('[MySQL] Connection test failed:', error);
+    return false;
+  }
+}
+
 export async function initializeMySQL() {
   try {
     // Import ENV for fallback values
@@ -51,6 +67,14 @@ export async function initializeMySQL() {
       }
     } else {
       console.error('[MySQL] No database configuration found');
+      return null;
+    }
+    
+    // Test connection first
+    console.log('[MySQL] Testing connection before initialization...');
+    const isConnected = await testMySQLConnection(config);
+    if (!isConnected) {
+      console.error('[MySQL] Connection test failed, aborting initialization');
       return null;
     }
     
