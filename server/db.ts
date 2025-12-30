@@ -477,7 +477,7 @@ export async function getFeaturesByCategory(category: string) {
     const { features } = await import("../drizzle/schema");
     const { eq, asc } = await import("drizzle-orm");
     return await db.select().from(features)
-      .where(eq(features.category, category))
+      .where(eq(features.category, category as "mechanism" | "advantage" | "revenue"))
       .orderBy(asc(features.sortOrder));
   } catch (error) {
     console.error("[Database] Error getting features by category:", error);

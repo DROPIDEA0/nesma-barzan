@@ -221,6 +221,9 @@ importers:
       '@types/bcryptjs':
         specifier: ^3.0.0
         version: 3.0.0
+      '@types/better-sqlite3':
+        specifier: ^7.6.13
+        version: 7.6.13
       '@types/express':
         specifier: 4.17.21
         version: 4.17.21
@@ -253,7 +256,7 @@ importers:
         version: 0.31.5
       drizzle-orm:
         specifier: ^0.45.1
-        version: 0.45.1(better-sqlite3@12.5.0)(mysql2@3.15.1)
+        version: 0.45.1(@types/better-sqlite3@7.6.13)(better-sqlite3@12.5.0)(mysql2@3.15.1)
       esbuild:
         specifier: ^0.25.0
         version: 0.25.10
@@ -2168,6 +2171,9 @@ packages:
   '@types/bcryptjs@3.0.0':
     resolution: {integrity: sha512-WRZOuCuaz8UcZZE4R5HXTco2goQSI2XxjGY3hbM/xDvwmqFWd4ivooImsMx65OKM6CtNKbnZ5YL+YwAwK7c1dg==}
     deprecated: This is a stub types definition. bcryptjs provides its own type definitions, so you do not need this installed.
+
+  '@types/better-sqlite3@7.6.13':
+    resolution: {integrity: sha512-NMv9ASNARoKksWtsq/SHakpYAYnhBrQgGD8zkLYk/jaK8jUGn08CfEdTRgYhMypUQAfzSP8W6gNLe0q19/t4VA==}
 
   '@types/body-parser@1.19.6':
     resolution: {integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==}
@@ -6605,6 +6611,10 @@ snapshots:
     dependencies:
       bcryptjs: 3.0.3
 
+  '@types/better-sqlite3@7.6.13':
+    dependencies:
+      '@types/node': 24.7.0
+
   '@types/body-parser@1.19.6':
     dependencies:
       '@types/connect': 3.4.38
@@ -7333,8 +7343,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.45.1(better-sqlite3@12.5.0)(mysql2@3.15.1):
+  drizzle-orm@0.45.1(@types/better-sqlite3@7.6.13)(better-sqlite3@12.5.0)(mysql2@3.15.1):
     optionalDependencies:
+      '@types/better-sqlite3': 7.6.13
       better-sqlite3: 12.5.0
       mysql2: 3.15.1
 
