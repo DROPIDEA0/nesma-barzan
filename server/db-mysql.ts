@@ -16,8 +16,11 @@ export async function testMySQLConnection(config: any) {
     await testConnection.end();
     console.log('[MySQL] Connection test successful ✓');
     return true;
-  } catch (error) {
-    console.error('[MySQL] Connection test failed:', error);
+  } catch (error: any) {
+    console.error('[MySQL] Connection test failed:');
+    console.error('[MySQL] Error code:', error.code);
+    console.error('[MySQL] Error message:', error.message);
+    console.error('[MySQL] Error stack:', error.stack);
     return false;
   }
 }
@@ -40,6 +43,13 @@ export async function initializeMySQL() {
     if (DB_USER && DB_PASSWORD && DB_NAME) {
       // Use individual variables
       console.log('[MySQL] Using individual environment variables');
+      console.log('[MySQL] Config:', {
+        host: DB_HOST,
+        port: DB_PORT,
+        user: DB_USER,
+        database: DB_NAME,
+        passwordLength: DB_PASSWORD?.length
+      });
       config = {
         host: DB_HOST,
         port: parseInt(DB_PORT),
