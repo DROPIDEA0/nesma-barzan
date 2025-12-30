@@ -5,13 +5,24 @@ import { eq, asc, desc } from 'drizzle-orm';
 // Import MySQL or SQLite based on environment
 let db: any;
 
-if (process.env.NODE_ENV === 'production' && process.env.DATABASE_URL?.startsWith('mysql://')) {
+// Check if we should use MySQL (production) or SQLite (development)
+const useMySQL = process.env.NODE_ENV === 'production' || 
+                 process.env.DB_USER || 
+                 process.env.DATABASE_URL?.includes('mysql');
+
+if (useMySQL) {
   // Use MySQL in production
   console.log('[Database] Initializing MySQL for production');
   const { initializeMySQL } = require('./db-mysql');
   initializeMySQL().then((mysqlDb: any) => {
     db = mysqlDb;
     console.log('[Database] MySQL connected');
+  }).catch((error: any) => {
+    console.error('[Database] MySQL initialization failed:', error);
+    // Fallback to SQLite if MySQL fails
+    console.log('[Database] Falling back to SQLite');
+    const { db: sqliteDb } = require('./db-sqlite');
+    db = sqliteDb;
   });
 } else {
   // Use SQLite for development

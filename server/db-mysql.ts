@@ -8,25 +8,50 @@ let connection: mysql.Connection | null = null;
 
 export async function initializeMySQL() {
   try {
+    // Try individual environment variables first
+    const DB_HOST = process.env.DB_HOST || 'localhost';
+    const DB_PORT = process.env.DB_PORT || '3306';
+    const DB_USER = process.env.DB_USER;
+    const DB_PASSWORD = process.env.DB_PASSWORD;
+    const DB_NAME = process.env.DB_NAME;
     const DATABASE_URL = process.env.DATABASE_URL;
     
-    if (!DATABASE_URL) {
-      console.error('[MySQL] DATABASE_URL is not defined');
+    let config: any;
+    
+    if (DB_USER && DB_PASSWORD && DB_NAME) {
+      // Use individual variables
+      console.log('[MySQL] Using individual environment variables');
+      config = {
+        host: DB_HOST,
+        port: parseInt(DB_PORT),
+        user: DB_USER,
+        password: DB_PASSWORD,
+        database: DB_NAME,
+        charset: 'utf8mb4',
+      };
+    } else if (DATABASE_URL) {
+      // Parse DATABASE_URL
+      console.log('[MySQL] Using DATABASE_URL');
+      try {
+        const url = new URL(DATABASE_URL);
+        config = {
+          host: url.hostname,
+          port: parseInt(url.port) || 3306,
+          user: url.username,
+          password: decodeURIComponent(url.password),
+          database: url.pathname.slice(1),
+          charset: 'utf8mb4',
+        };
+      } catch (urlError) {
+        console.error('[MySQL] Failed to parse DATABASE_URL:', urlError);
+        return null;
+      }
+    } else {
+      console.error('[MySQL] No database configuration found');
       return null;
     }
-
-    // Parse DATABASE_URL
-    // Format: mysql://username:password@host:port/database
-    const url = new URL(DATABASE_URL);
     
-    connection = await mysql.createConnection({
-      host: url.hostname,
-      port: parseInt(url.port) || 3306,
-      user: url.username,
-      password: url.password,
-      database: url.pathname.slice(1), // Remove leading /
-      charset: 'utf8mb4',
-    });
+    connection = await mysql.createConnection(config);
 
     db = drizzle(connection);
 
