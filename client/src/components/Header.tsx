@@ -14,12 +14,21 @@ export function Header() {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: siteContent } = trpc.content.getAll.useQuery();
+  const { data: settings } = trpc.settings.getAll.useQuery();
   
   // Helper function to get content by key
   const getContent = (key: string) => {
     const content = siteContent?.find(c => c.key === key);
     return lang === 'ar' ? content?.value_ar : content?.value_en;
   };
+
+  // Helper function to get setting by key
+  const getSetting = (key: string) => {
+    return settings?.find(s => s.key === key)?.value;
+  };
+
+  const siteLogo = getSetting('site_logo') || '/logo.png';
+  const siteName = lang === 'ar' ? (getSetting('site_name_ar') || 'نسمة برزان') : (getSetting('site_name_en') || 'Nesma Barzan');
 
   const navItems = [
     { href: '/', label: getContent('header_home') || t('nav.home') },
@@ -42,13 +51,13 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <img 
-              src="/logo.png" 
-              alt="Nesma Barzan" 
+              src={siteLogo} 
+              alt={siteName} 
               className="h-14 w-auto"
             />
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold text-foreground">
-                {lang === 'ar' ? 'نسمة برزان' : 'Nesma Barzan'}
+                {siteName}
               </h1>
               <p className="text-xs text-muted-foreground">
                 {lang === 'ar' ? 'التجارية' : 'Trading'}
@@ -121,9 +130,9 @@ export function Header() {
               <SheetContent side={isRTL ? 'right' : 'left'} className="w-80">
                 <div className="flex flex-col gap-6 mt-8">
                   <div className="flex items-center gap-3">
-                    <img src="/logo.png" alt="Nesma Barzan" className="h-12 w-auto" />
+                    <img src={siteLogo} alt={siteName} className="h-12 w-auto" />
                     <div>
-                      <h2 className="font-bold">{lang === 'ar' ? 'نسمة برزان' : 'Nesma Barzan'}</h2>
+                      <h2 className="font-bold">{siteName}</h2>
                       <p className="text-xs text-muted-foreground">{lang === 'ar' ? 'التجارية' : 'Trading'}</p>
                     </div>
                   </div>

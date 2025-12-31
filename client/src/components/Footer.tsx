@@ -1,8 +1,22 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Phone, Mail, Globe, MapPin } from 'lucide-react';
+import { trpc } from '@/lib/trpc';
 
 export function Footer() {
   const { lang, t } = useLanguage();
+  const { data: settings } = trpc.settings.getAll.useQuery();
+
+  const getSetting = (key: string) => {
+    return settings?.find(s => s.key === key)?.value;
+  };
+
+  const siteLogo = getSetting('site_logo') || '/logo.png';
+  const siteName = lang === 'ar' ? (getSetting('site_name_ar') || 'نسمة برزان التجارية') : (getSetting('site_name_en') || 'Nesma Barzan Trading');
+  const foundationYear = getSetting('foundation_year') || '2005';
+  const contactPhone = getSetting('contact_phone') || '+966 555 499 991';
+  const contactEmail = getSetting('contact_email') || 'info@shheer.com';
+  const contactWebsite = getSetting('contact_website') || 'www.shheer.com';
+  const contactAddress = lang === 'ar' ? (getSetting('contact_address_ar') || t('contact.addressValue')) : (getSetting('contact_address_en') || t('contact.addressValue'));
 
   return (
     <footer className="bg-sidebar text-sidebar-foreground relative">
@@ -13,13 +27,13 @@ export function Footer() {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <img src="/logo.png" alt="Nesma Barzan" className="h-16 w-auto bg-white rounded-lg p-1" />
+              <img src={siteLogo} alt={siteName} className="h-16 w-auto bg-white rounded-lg p-1" />
               <div>
                 <h3 className="text-lg font-bold">
-                  {lang === 'ar' ? 'نسمة برزان التجارية' : 'Nesma Barzan Trading'}
+                  {siteName}
                 </h3>
                 <p className="text-sm text-sidebar-foreground/70">
-                  {lang === 'ar' ? 'تأسست عام 2005' : 'Established 2005'}
+                  {lang === 'ar' ? `تأسست عام ${foundationYear}` : `Established ${foundationYear}`}
                 </p>
               </div>
             </div>
@@ -53,21 +67,21 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-lg font-bold">{t('contact.title')}</h3>
             <div className="space-y-3">
-              <a href="tel:00966555499991" className="flex items-center gap-3 text-sm text-sidebar-foreground/70 hover:text-primary transition-colors">
+              <a href={`tel:${contactPhone.replace(/\s/g, '')}`} className="flex items-center gap-3 text-sm text-sidebar-foreground/70 hover:text-primary transition-colors">
                 <Phone className="h-4 w-4 text-primary" />
-                <span dir="ltr">+966 555 499 991</span>
+                <span dir="ltr">{contactPhone}</span>
               </a>
-              <a href="mailto:info@shheer.com" className="flex items-center gap-3 text-sm text-sidebar-foreground/70 hover:text-primary transition-colors">
+              <a href={`mailto:${contactEmail}`} className="flex items-center gap-3 text-sm text-sidebar-foreground/70 hover:text-primary transition-colors">
                 <Mail className="h-4 w-4 text-primary" />
-                <span>info@shheer.com</span>
+                <span>{contactEmail}</span>
               </a>
-              <a href="https://www.shheer.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-sidebar-foreground/70 hover:text-primary transition-colors">
+              <a href={`https://${contactWebsite}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-sidebar-foreground/70 hover:text-primary transition-colors">
                 <Globe className="h-4 w-4 text-primary" />
-                <span>www.shheer.com</span>
+                <span>{contactWebsite}</span>
               </a>
               <div className="flex items-center gap-3 text-sm text-sidebar-foreground/70">
                 <MapPin className="h-4 w-4 text-primary" />
-                <span>{t('contact.addressValue')}</span>
+                <span>{contactAddress}</span>
               </div>
             </div>
           </div>
