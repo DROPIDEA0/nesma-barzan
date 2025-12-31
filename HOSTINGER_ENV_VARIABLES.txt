@@ -1,44 +1,53 @@
 # ============================================
-# Environment Variables for Hostinger
-# نسخ هذه المتغيرات إلى Hostinger Dashboard
+# Environment Variables for VPS (Hostinger)
+# Updated: 31 December 2025
 # ============================================
 
 # Database Configuration (MySQL)
-DATABASE_URL=mysql://u521934522_nasma_db_new:uRo2hz3yf0|@localhost:3306/u521934522_nasma_db
+DATABASE_URL=mysql://u521934522-nasma-db-new:Downy144168@144168@127.0.0.1:3306/u521934522-nasma-db
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USER=u521934522-nasma-db-new
+DB_PASSWORD=Downy144168@144168
+DB_NAME=u521934522-nasma-db
 
-# Session Secret (غيّره في الإنتاج)
-SESSION_SECRET=nesma-barzan-production-secret-2025-change-this
-
-# OAuth Settings (Manus)
-OAUTH_SERVER_URL=https://oauth.manus.im
-OAUTH_CLIENT_ID=nesma-barzan-prod
-OAUTH_CLIENT_SECRET=prod-secret-key-change-this
-OAUTH_REDIRECT_URI=https://mediumturquoise-dotterel-343079.hostingersite.com/api/auth/callback
+# Security
+SESSION_SECRET=nesma-barzan-production-secret-2025-vps
+JWT_SECRET=nesma-barzan-jwt-secret-2025-production-key
 
 # Node Environment
 NODE_ENV=production
 
-# Server Port (Hostinger يحدده تلقائياً)
+# Server Port
 PORT=3000
+
+# OAuth Configuration (disabled for now)
+VITE_OAUTH_PORTAL_URL=https://oauth.example.com
+VITE_APP_ID=nesma-barzan
+OAUTH_SERVER_URL=
+
+# Analytics (optional)
+VITE_ANALYTICS_ENDPOINT=
+VITE_ANALYTICS_WEBSITE_ID=
+
+# Frontend Forge API (optional)
+VITE_FRONTEND_FORGE_API_KEY=
+VITE_FRONTEND_FORGE_API_URL=
 
 # ============================================
 # ملاحظات مهمة:
 # ============================================
-# 1. DATABASE_URL يحتوي على معلومات قاعدة البيانات من Hostinger
-# 2. SESSION_SECRET يجب تغييره إلى قيمة عشوائية قوية
-# 3. OAUTH_REDIRECT_URI يجب تحديثه عند ربط Domain الدائم
-# 4. PORT قد لا يكون مطلوباً - Hostinger يديره تلقائياً
+# 1. هذه المتغيرات محدثة لبيئة VPS الجديدة
+# 2. تم تحديث بيانات قاعدة البيانات من الاستضافة المشتركة إلى VPS
+# 3. الملف .env على الخادم يحتوي على هذه المتغيرات
+# 4. المسار على الخادم: /home/shheercom/htdocs/www.shheer.com/.env
 # ============================================
 
 # ============================================
-# كيفية إضافة المتغيرات في Hostinger:
+# بيانات الخادم (VPS):
 # ============================================
-# 1. اذهب إلى: Websites > mediumturquoise-dotterel-343079
-# 2. اضغط على: Settings and redeploy
-# 3. في قسم "Environment Variables" اضغط "Add variable"
-# 4. أضف كل متغير على حدة:
-#    - Name: DATABASE_URL
-#    - Value: mysql://u521934522_nasma_db_new:uRo2hz3yf0|@localhost:3306/u521934522_nasma_db
-# 5. كرر لجميع المتغيرات
-# 6. اضغط "Save" ثم "Redeploy"
+# IP: 72.62.7.159
+# SSH: ssh root@72.62.7.159
+# Password: Downy144168@#144168
+# Project Path: /home/shheercom/htdocs/www.shheer.com
 # ============================================

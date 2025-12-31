@@ -1,196 +1,253 @@
--- ============================================
--- قاعدة بيانات نسمة برزان التجارية - NESMA BARZAN
--- Database Schema - Unified Version
--- ============================================
--- 
--- ⚠️ تعليمات صارمة للوكلاء (AI Agents):
--- 
--- 1. هذا هو الملف الوحيد لقاعدة البيانات في جذر المشروع
--- 2. لا تنشئ ملفات SQL جديدة في الجذر (مثل: schema.sql, init.sql, setup.sql)
--- 3. للـ Migrations: استخدم Drizzle Kit فقط (مجلد drizzle/)
--- 4. التحديثات تتم عبر: pnpm run db:push
--- 5. هذا الملف للاستيراد اليدوي فقط (phpMyAdmin أو MySQL CLI)
--- 6. لا تعدّل هذا الملف إلا عند تغيير البنية الأساسية للجداول
--- 
--- ============================================
+-- MySQL dump 10.13  Distrib 8.4.6-6, for Linux (x86_64)
+--
+-- Host: 127.0.0.1    Database: u521934522-nasma-db
+-- ------------------------------------------------------
+-- Server version	8.4.6-6
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!50717 SELECT COUNT(*) INTO @rocksdb_has_p_s_session_variables FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'performance_schema' AND TABLE_NAME = 'session_variables' */;
+/*!50717 SET @rocksdb_get_is_supported = IF (@rocksdb_has_p_s_session_variables, 'SELECT COUNT(*) INTO @rocksdb_is_supported FROM performance_schema.session_variables WHERE VARIABLE_NAME=\'rocksdb_bulk_load\'', 'SELECT 0') */;
+/*!50717 PREPARE s FROM @rocksdb_get_is_supported */;
+/*!50717 EXECUTE s */;
+/*!50717 DEALLOCATE PREPARE s */;
+/*!50717 SET @rocksdb_enable_bulk_load = IF (@rocksdb_is_supported, 'SET SESSION rocksdb_bulk_load = 1', 'SET @rocksdb_dummy_bulk_load = 0') */;
+/*!50717 PREPARE s FROM @rocksdb_enable_bulk_load */;
+/*!50717 EXECUTE s */;
+/*!50717 DEALLOCATE PREPARE s */;
 
--- ============================================
--- معلومات قاعدة البيانات على Hostinger
--- ============================================
--- 
--- اسم قاعدة البيانات: u521934522_nasma_db
--- اسم المستخدم: u521934522_nasma_db_new
--- كلمة المرور: uRo2hz3yf0|
--- المضيف: localhost
--- المنفذ: 3306
--- 
--- DATABASE_URL:
--- mysql://u521934522_nasma_db_new:uRo2hz3yf0|@localhost:3306/u521934522_nasma_db
--- 
--- ============================================
+--
+-- Table structure for table `features`
+--
 
--- ============================================
--- 1. جدول المستخدمين (users)
--- ============================================
+DROP TABLE IF EXISTS `features`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `features` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `titleAr` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `titleEn` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descriptionAr` text COLLATE utf8mb4_unicode_ci,
+  `descriptionEn` text COLLATE utf8mb4_unicode_ci,
+  `value` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icon` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category` enum('mechanism','advantage','revenue') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `openId` varchar(64) DEFAULT NULL,
-  `username` varchar(100) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `name` text,
-  `email` varchar(320) DEFAULT NULL,
-  `avatar` varchar(500) DEFAULT NULL,
-  `loginMethod` varchar(64) DEFAULT 'password',
-  `role` enum('user','admin') NOT NULL DEFAULT 'user',
+--
+-- Table structure for table `hero_stats`
+--
+
+DROP TABLE IF EXISTS `hero_stats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hero_stats` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `labelAr` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `labelEn` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `suffix` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icon` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `images`
+--
+
+DROP TABLE IF EXISTS `images`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `images` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `filename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `altTextAr` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `altTextEn` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `size` int DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fileKey` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mimeType` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `navigation_items`
+--
+
+DROP TABLE IF EXISTS `navigation_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `navigation_items` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `labelAr` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `labelEn` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `parentId` int DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `projects`
+--
+
+DROP TABLE IF EXISTS `projects`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `projects` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title_ar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title_en` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description_ar` text COLLATE utf8mb4_unicode_ci,
+  `description_en` text COLLATE utf8mb4_unicode_ci,
+  `image` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('active','inactive') COLLATE utf8mb4_unicode_ci DEFAULT 'active',
+  `order` int DEFAULT '0',
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `site_content`
+--
+
+DROP TABLE IF EXISTS `site_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `site_content` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value_ar` text COLLATE utf8mb4_unicode_ci,
+  `value_en` text COLLATE utf8mb4_unicode_ci,
+  `section` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description_ar` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description_en` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `site_content_key_unique` (`key`)
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `site_settings`
+--
+
+DROP TABLE IF EXISTS `site_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `site_settings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci,
+  `type` enum('text','number','boolean','image','json') COLLATE utf8mb4_unicode_ci DEFAULT 'text',
+  `category` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT 'general',
+  `labelAr` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `labelEn` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `site_settings_key_unique` (`key`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `openId` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci,
+  `email` varchar(320) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `loginMethod` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT 'password',
+  `role` enum('user','admin') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `lastSignedIn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_openId_unique` (`openId`),
-  UNIQUE KEY `users_username_unique` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `users_username_unique` (`username`),
+  UNIQUE KEY `openId` (`openId`),
+  UNIQUE KEY `openId_2` (`openId`),
+  UNIQUE KEY `openId_3` (`openId`),
+  UNIQUE KEY `openId_4` (`openId`),
+  UNIQUE KEY `openId_5` (`openId`),
+  UNIQUE KEY `openId_6` (`openId`),
+  UNIQUE KEY `openId_7` (`openId`),
+  UNIQUE KEY `openId_8` (`openId`),
+  UNIQUE KEY `openId_9` (`openId`),
+  UNIQUE KEY `openId_10` (`openId`),
+  UNIQUE KEY `openId_11` (`openId`),
+  UNIQUE KEY `openId_12` (`openId`),
+  UNIQUE KEY `openId_13` (`openId`),
+  UNIQUE KEY `openId_14` (`openId`),
+  UNIQUE KEY `openId_15` (`openId`),
+  UNIQUE KEY `openId_16` (`openId`),
+  UNIQUE KEY `openId_17` (`openId`),
+  UNIQUE KEY `openId_18` (`openId`),
+  UNIQUE KEY `openId_19` (`openId`),
+  UNIQUE KEY `openId_20` (`openId`),
+  UNIQUE KEY `openId_21` (`openId`),
+  UNIQUE KEY `openId_22` (`openId`),
+  UNIQUE KEY `openId_23` (`openId`),
+  UNIQUE KEY `openId_24` (`openId`),
+  UNIQUE KEY `openId_25` (`openId`),
+  UNIQUE KEY `openId_26` (`openId`),
+  UNIQUE KEY `openId_27` (`openId`),
+  UNIQUE KEY `openId_28` (`openId`),
+  UNIQUE KEY `openId_29` (`openId`),
+  UNIQUE KEY `openId_30` (`openId`)
+) ENGINE=InnoDB AUTO_INCREMENT=345 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50112 SET @disable_bulk_load = IF (@is_rocksdb_supported, 'SET SESSION rocksdb_bulk_load = @old_rocksdb_bulk_load', 'SET @dummy_rocksdb_bulk_load = 0') */;
+/*!50112 PREPARE s FROM @disable_bulk_load */;
+/*!50112 EXECUTE s */;
+/*!50112 DEALLOCATE PREPARE s */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
--- ============================================
--- 2. جدول محتوى الموقع (site_content)
--- ============================================
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-CREATE TABLE IF NOT EXISTS `site_content` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) NOT NULL,
-  `value_ar` text,
-  `value_en` text,
-  `section` varchar(100) DEFAULT NULL,
-  `description_ar` varchar(500) DEFAULT NULL,
-  `description_en` varchar(500) DEFAULT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `site_content_key_unique` (`key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================================
--- 3. جدول إعدادات الموقع (site_settings)
--- ============================================
-
-CREATE TABLE IF NOT EXISTS `site_settings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) NOT NULL,
-  `value` text,
-  `type` enum('text','number','boolean','image','json') DEFAULT 'text',
-  `category` varchar(100) DEFAULT 'general',
-  `label_ar` varchar(255) DEFAULT NULL,
-  `label_en` varchar(255) DEFAULT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `site_settings_key_unique` (`key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================================
--- 4. جدول المشاريع (projects)
--- ============================================
-
-CREATE TABLE IF NOT EXISTS `projects` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title_ar` varchar(255) NOT NULL,
-  `title_en` varchar(255) NOT NULL,
-  `description_ar` text,
-  `description_en` text,
-  `image` varchar(500) DEFAULT NULL,
-  `category` varchar(100) DEFAULT NULL,
-  `status` enum('active','inactive') DEFAULT 'active',
-  `order` int(11) DEFAULT 0,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================================
--- 5. جدول الصور (images)
--- ============================================
-
-CREATE TABLE IF NOT EXISTS `images` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(255) NOT NULL,
-  `url` varchar(500) NOT NULL,
-  `fileKey` varchar(500) DEFAULT NULL,
-  `mimeType` varchar(100) DEFAULT NULL,
-  `altTextAr` varchar(255) DEFAULT NULL,
-  `altTextEn` varchar(255) DEFAULT NULL,
-  `category` varchar(100) DEFAULT NULL,
-  `size` int(11) DEFAULT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================================
--- إدراج البيانات الأولية (Initial Data)
--- ============================================
-
--- المستخدم الافتراضي (Default Admin User)
--- Username: admin
--- Password: admin123 (مشفرة بـ bcrypt)
-INSERT INTO `users` (`username`, `password`, `name`, `email`, `role`, `loginMethod`, `createdAt`, `updatedAt`, `lastSignedIn`)
-SELECT 
-  'admin',
-  '$2a$10$YourHashedPasswordHere',
-  'Administrator',
-  'admin@nesmabarzan.com',
-  'admin',
-  'password',
-  NOW(),
-  NOW(),
-  NOW()
-WHERE NOT EXISTS (
-  SELECT 1 FROM `users` WHERE `username` = 'admin'
-);
-
--- إعدادات الموقع الأساسية
-INSERT INTO `site_settings` (`key`, `value`, `type`, `category`, `label_ar`, `label_en`) VALUES
-('site_logo', '/uploads/logo.png', 'image', 'general', 'شعار الموقع', 'Site Logo'),
-('site_name_ar', 'نسمة برزان التجارية', 'text', 'general', 'اسم الموقع بالعربي', 'Site Name (Arabic)'),
-('site_name_en', 'Nesma Barzan Trading', 'text', 'general', 'اسم الموقع بالإنجليزي', 'Site Name (English)'),
-('foundation_year', '2005', 'number', 'general', 'سنة التأسيس', 'Foundation Year'),
-('contact_phone', '+966 555 499 991', 'text', 'contact', 'رقم الهاتف', 'Phone Number'),
-('contact_email', 'info@shheer.com', 'text', 'contact', 'البريد الإلكتروني', 'Email'),
-('contact_website', 'www.shheer.com', 'text', 'contact', 'الموقع الإلكتروني', 'Website'),
-('contact_address_ar', 'الرياض، المملكة العربية السعودية', 'text', 'contact', 'العنوان (عربي)', 'Address (Arabic)'),
-('contact_address_en', 'Riyadh, Saudi Arabia', 'text', 'contact', 'العنوان (إنجليزي)', 'Address (English)')
-ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);
-
--- محتوى الصفحة الرئيسية
-INSERT INTO `site_content` (`key`, `value_ar`, `value_en`, `section`, `description_ar`, `description_en`) VALUES
-('hero_title', 'نسمة برزان التجارية', 'Nesma Barzan Trading', 'hero', 'عنوان الصفحة الرئيسية', 'Hero Section Title'),
-('hero_subtitle', 'شريكك الموثوق في التجارة والخدمات', 'Your Trusted Partner in Trade and Services', 'hero', 'العنوان الفرعي', 'Hero Subtitle'),
-('about_title', 'من نحن', 'About Us', 'about', 'عنوان قسم من نحن', 'About Section Title'),
-('about_description', 'نسمة برزان التجارية شركة رائدة في مجال التجارة والخدمات منذ عام 2005', 'Nesma Barzan Trading is a leading company in trade and services since 2005', 'about', 'وصف الشركة', 'Company Description')
-ON DUPLICATE KEY UPDATE `value_ar` = VALUES(`value_ar`), `value_en` = VALUES(`value_en`);
-
-COMMIT;
-
--- ============================================
--- ملاحظات مهمة (Important Notes)
--- ============================================
--- 
--- 1. استخدم هذا الملف للاستيراد الأولي فقط
--- 2. بعد الاستيراد، استخدم Drizzle ORM للتعديلات
--- 3. كلمة المرور الافتراضية: admin123 (يجب تغييرها فوراً!)
--- 4. تأكد من تحديث SESSION_SECRET في Environment Variables
--- 5. جميع الجداول تدعم UTF-8 بشكل كامل
--- 
--- كيفية الاستيراد:
--- 1. اذهب إلى phpMyAdmin في Hostinger
--- 2. اختر قاعدة البيانات: u521934522_nasma_db
--- 3. اضغط على Import
--- 4. ارفع هذا الملف (DATABASE.sql)
--- 5. اضغط Go
--- 
--- ============================================
-
--- نهاية الملف
+-- Dump completed on 2025-12-31 17:18:33
