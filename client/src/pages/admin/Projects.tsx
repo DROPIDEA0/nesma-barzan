@@ -260,9 +260,12 @@ export default function AdminProjects() {
 
         {/* Projects List */}
         {isLoading ? (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#c8a870] mx-auto"></div>
-            <p className="text-gray-600 mt-4">{lang === 'ar' ? 'جاري التحميل...' : 'Loading...'}</p>
+          <div className="space-y-4">
+            {[1,2,3].map(i => (
+              <div key={i} className="animate-pulse">
+                <div className="h-32 bg-gray-200 rounded-lg"></div>
+              </div>
+            ))}
           </div>
         ) : projects && projects.length > 0 ? (
           <div className="grid gap-6">

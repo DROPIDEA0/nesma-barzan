@@ -76,8 +76,17 @@ export default function AdminContent() {
   if (isLoading) {
     return (
       <AdminLayout>
-        <div className="flex justify-center items-center h-96">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#c8a870]"></div>
+        <div className="space-y-6">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded w-1/4 mb-2"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+          </div>
+          <div className="grid grid-cols-4 gap-2">
+            {[1,2,3,4].map(i => <div key={i} className="h-10 bg-gray-200 rounded"></div>)}
+          </div>
+          <div className="space-y-4">
+            {[1,2,3].map(i => <div key={i} className="h-32 bg-gray-200 rounded"></div>)}
+          </div>
         </div>
       </AdminLayout>
     );
