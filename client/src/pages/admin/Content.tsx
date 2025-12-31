@@ -112,7 +112,7 @@ export default function AdminContent() {
                 <TabsTrigger
                   key={section.id}
                   value={section.id}
-                  className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#c8a870] data-[state=active]:to-[#d4b886] data-[state=active]:text-white"
+                  className="flex items-center gap-2 bg-white text-[#c8a870] border-2 border-[#c8a870] data-[state=active]:bg-[#c8a870] data-[state=active]:text-white hover:bg-[#c8a870] hover:text-white transition-all duration-300"
                 >
                   <Icon className="h-4 w-4" />
                   <span className="hidden sm:inline">{section.name}</span>

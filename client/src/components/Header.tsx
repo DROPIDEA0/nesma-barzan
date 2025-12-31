@@ -6,19 +6,27 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu, X, Globe } from 'lucide-react';
 import { getLoginUrl } from '@/const';
+import { trpc } from '@/lib/trpc';
 
 export function Header() {
   const { lang, setLang, t, isRTL } = useLanguage();
   const { user, isAuthenticated, logout } = useAuth();
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: siteContent } = trpc.content.getAll.useQuery();
+  
+  // Helper function to get content by key
+  const getContent = (key: string) => {
+    const content = siteContent?.find(c => c.key === key);
+    return lang === 'ar' ? content?.value_ar : content?.value_en;
+  };
 
   const navItems = [
-    { href: '/', label: t('nav.home') },
-    { href: '/#about', label: t('nav.about') },
-    { href: '/#shheer', label: t('nav.shheer') },
-    { href: '/#projects', label: t('nav.projects') },
-    { href: '/#contact', label: t('nav.contact') },
+    { href: '/', label: getContent('header_home') || t('nav.home') },
+    { href: '/#about', label: getContent('header_about') || t('nav.about') },
+    { href: '/#shheer', label: getContent('header_shheer') || t('nav.shheer') },
+    { href: '/#projects', label: getContent('header_projects') || t('nav.projects') },
+    { href: '/#contact', label: getContent('header_contact') || t('nav.contact') },
   ];
 
   const toggleLanguage = () => {

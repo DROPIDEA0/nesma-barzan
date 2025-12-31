@@ -105,6 +105,13 @@ function AnimatedCounter({ value, suffix = '' }: { value: string; suffix?: strin
 export default function Home() {
   const { lang, t, isRTL } = useLanguage();
   const { data: projectsData } = trpc.projects.getActive.useQuery();
+  const { data: siteContent } = trpc.content.getAll.useQuery();
+  
+  // Helper function to get content by key
+  const getContent = (key: string) => {
+    const content = siteContent?.find(c => c.key === key);
+    return lang === 'ar' ? content?.value_ar : content?.value_en;
+  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -206,13 +213,13 @@ export default function Home() {
                   textShadow: '0 0 40px oklch(0.6 0.15 240 / 0.3), 0 0 80px oklch(0.65 0.18 75 / 0.2)',
                 }}
               >
-                {t('hero.title')}
+                {getContent('hero_title') || t('hero.title')}
               </motion.h1>
               <motion.p 
                 className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
                 variants={staggerItem}
               >
-                {t('hero.subtitle')}
+                {getContent('hero_subtitle') || t('hero.subtitle')}
               </motion.p>
             </motion.div>
 
@@ -224,9 +231,9 @@ export default function Home() {
               variants={staggerContainer}
             >
               {[
-                { value: '+19', label: lang === 'ar' ? 'عاماً من الخبرة' : 'Years of Experience' },
-                { value: '$4B', label: lang === 'ar' ? 'قيمة الرخصة' : 'License Value' },
-                { value: '$400B+', label: lang === 'ar' ? 'حجم السوق' : 'Market Size' },
+                { value: getContent('hero_stat1_value') || '+19', label: getContent('hero_stat1_label') || (lang === 'ar' ? 'عاماً من الخبرة' : 'Years of Experience') },
+                { value: getContent('hero_stat2_value') || '$4B', label: getContent('hero_stat2_label') || (lang === 'ar' ? 'قيمة الرخصة' : 'License Value') },
+                { value: getContent('hero_stat3_value') || '$400B+', label: getContent('hero_stat3_label') || (lang === 'ar' ? 'حجم السوق' : 'Market Size') },
               ].map((stat, index) => (
                 <motion.div 
                   key={index} 
