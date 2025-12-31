@@ -26,11 +26,14 @@ export type InsertUser = typeof users.$inferInsert;
 export const siteContent = mysqlTable("site_content", {
   id: int("id").autoincrement().primaryKey(),
   key: varchar("key", { length: 255 }).notNull().unique(),
+  label_ar: varchar("label_ar", { length: 255 }),
+  label_en: varchar("label_en", { length: 255 }),
   value_ar: text("value_ar"),
   value_en: text("value_en"),
   section: varchar("section", { length: 100 }),
   description_ar: varchar("description_ar", { length: 500 }),
   description_en: varchar("description_en", { length: 500 }),
+  icon: varchar("icon", { length: 100 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

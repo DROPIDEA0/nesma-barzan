@@ -270,7 +270,7 @@ export default function Home() {
                   onClick={() => scrollToSection('shheer')}
                 >
                   <Sparkles className="h-5 w-5 me-2 group-hover:animate-pulse" />
-                  {t('hero.cta')}
+                  {getContent('hero_cta_primary') || t('hero.cta')}
                   <ArrowRight className={`h-5 w-5 ms-2 transition-transform group-hover:${isRTL ? '-translate-x-1' : 'translate-x-1'}`} />
                 </Button>
               </motion.div>
@@ -281,7 +281,7 @@ export default function Home() {
                   className="px-8 py-6 text-lg border-2 hover:bg-primary/5"
                   onClick={() => scrollToSection('contact')}
                 >
-                  {t('contact.title')}
+                  {getContent('hero_cta_secondary') || t('contact.title')}
                 </Button>
               </motion.div>
             </motion.div>

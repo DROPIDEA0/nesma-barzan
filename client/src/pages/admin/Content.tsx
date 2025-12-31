@@ -135,12 +135,15 @@ export default function AdminContent() {
                     groupedContent[section.id].map((item: any) => (
                       <Card key={item.key} className="border-l-4 border-l-[#c8a870]">
                         <CardContent className="pt-6 space-y-4">
-                          {/* Key and Description */}
-                          <div className="flex flex-col gap-1 pb-4 border-b">
-                            <div className="flex items-center gap-2">
-                              <span className="text-xs font-mono bg-gray-100 px-2 py-1 rounded">
-                                {item.key}
-                              </span>
+                          {/* Title and Description */}
+                          <div className="flex flex-col gap-2 pb-4 border-b">
+                            <div className="flex items-center gap-3">
+                              {item.icon && (
+                                <span className="text-2xl">{item.icon}</span>
+                              )}
+                              <h3 className="text-lg font-bold text-gray-900">
+                                {lang === 'ar' ? item.label_ar || item.key : item.label_en || item.key}
+                              </h3>
                             </div>
                             {item.description_ar && (
                               <p className="text-sm text-gray-600">
