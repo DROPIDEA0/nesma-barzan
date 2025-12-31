@@ -157,6 +157,30 @@ export default function Home() {
         
         <div className="container relative z-10">
           <div className="max-w-5xl mx-auto text-center space-y-8">
+            {/* Title with Stagger Animation */}
+            <motion.div 
+              className="space-y-4"
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
+            >
+              <motion.h1 
+                className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground"
+                variants={staggerItem}
+                style={{
+                  textShadow: '0 0 40px oklch(0.6 0.15 240 / 0.3), 0 0 80px oklch(0.65 0.18 75 / 0.2)',
+                }}
+              >
+                {getContent('hero_title') || t('hero.title')}
+              </motion.h1>
+              <motion.p 
+                className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+                variants={staggerItem}
+              >
+                {getContent('hero_subtitle') || t('hero.subtitle')}
+              </motion.p>
+            </motion.div>
+
             {/* Logo with Animation & Luxury Frame */}
             <motion.div
               initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
@@ -187,8 +211,8 @@ export default function Home() {
               {/* Logo with Glow */}
               <motion.div className="relative">
                 <motion.img 
-                  src="/logo.png" 
-                  alt="Nesma Barzan" 
+                  src={getContent('hero_logo') || '/logo.png'} 
+                  alt={siteName} 
                   className="h-32 md:h-44 w-auto mx-auto relative z-10"
                   style={{
                     filter: 'drop-shadow(0 0 30px oklch(0.65 0.18 75 / 0.4)) drop-shadow(0 0 60px oklch(0.6 0.15 240 / 0.3))',
@@ -197,30 +221,6 @@ export default function Home() {
                   transition={{ duration: 0.3 }}
                 />
               </motion.div>
-            </motion.div>
-            
-            {/* Title with Stagger Animation */}
-            <motion.div 
-              className="space-y-4"
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer}
-            >
-              <motion.h1 
-                className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground"
-                variants={staggerItem}
-                style={{
-                  textShadow: '0 0 40px oklch(0.6 0.15 240 / 0.3), 0 0 80px oklch(0.65 0.18 75 / 0.2)',
-                }}
-              >
-                {getContent('hero_title') || t('hero.title')}
-              </motion.h1>
-              <motion.p 
-                className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
-                variants={staggerItem}
-              >
-                {getContent('hero_subtitle') || t('hero.subtitle')}
-              </motion.p>
             </motion.div>
 
             {/* Stats Row */}

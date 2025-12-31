@@ -1,7 +1,18 @@
 import { useEffect, useState } from 'react';
+import { trpc } from '@/lib/trpc';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
+  const { lang } = useLanguage();
+  const { data: settings } = trpc.settings.getAll.useQuery();
+
+  const getSetting = (key: string) => {
+    return settings?.find(s => s.key === key)?.value;
+  };
+
+  const siteLogo = getSetting('site_logo') || '/logo.png';
+  const siteName = lang === 'ar' ? (getSetting('site_name_ar') || 'نسمة برزان التجارية') : (getSetting('site_name_en') || 'Nesma Barzan Trading');
 
   useEffect(() => {
     // Hide preloader after page loads
@@ -20,8 +31,8 @@ export function Preloader() {
         {/* Logo with pulse animation */}
         <div className="animate-pulse">
           <img 
-            src="/logo.png" 
-            alt="Nesma Barzan" 
+            src={siteLogo} 
+            alt={siteName} 
             className="h-32 w-auto"
           />
         </div>
@@ -35,10 +46,10 @@ export function Preloader() {
         {/* Loading text */}
         <div className="text-center">
           <p className="text-xl font-semibold text-gray-800 animate-pulse">
-            نسمة برزان التجارية
+            {siteName}
           </p>
           <p className="text-sm text-gray-600 mt-2">
-            جاري التحميل...
+            {lang === 'ar' ? 'جاري التحميل...' : 'Loading...'}
           </p>
         </div>
       </div>
