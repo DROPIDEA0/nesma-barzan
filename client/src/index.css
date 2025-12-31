@@ -57,8 +57,8 @@
   --radius: 1rem;
   --background: oklch(0.08 0.03 240);
   --foreground: oklch(0.95 0.01 240);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.04 240);
+  --card: oklch(0.08 0.03 240);
+  --card-foreground: oklch(0.95 0.01 240);
   --popover: oklch(0.12 0.04 240);
   --popover-foreground: oklch(0.95 0.01 240);
   --secondary: oklch(0.18 0.04 240);
@@ -90,8 +90,8 @@
   --sidebar-primary-foreground: oklch(0.05 0.03 240);
   --background: oklch(0.05 0.04 240);
   --foreground: oklch(0.98 0.01 240);
-  --card: oklch(0.98 0 0);
-  --card-foreground: oklch(0.15 0.04 240);
+  --card: oklch(0.05 0.04 240);
+  --card-foreground: oklch(0.98 0.01 240);
   --popover: oklch(0.09 0.04 240);
   --popover-foreground: oklch(0.98 0.01 240);
   --secondary: oklch(0.15 0.04 240);
@@ -384,9 +384,9 @@
   .animated-border::before {
     content: '';
     position: absolute;
-    inset: -1px;
+    inset: -2px;
     border-radius: inherit;
-    padding: 1px;
+    padding: 2px;
     background: linear-gradient(135deg, 
       oklch(0.6 0.18 240), 
       oklch(0.7 0.22 245), 
@@ -402,7 +402,7 @@
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    opacity: 0;
+    opacity: 0.8;
     animation: animatedGradientBorder 5s ease infinite;
     filter: drop-shadow(0 0 8px oklch(0.9 0.32 72 / 0.6));
     transition: opacity 0.3s ease;
@@ -415,8 +415,8 @@
   
   .animated-border:hover::before {
     opacity: 1;
-    inset: -2px;
-    padding: 2px;
+    inset: -3px;
+    padding: 3px;
   }
   
   /* Enhanced Gold Gradient */

@@ -170,7 +170,7 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="relative inline-block mb-24"
+              className="relative inline-block mt-32 mb-24"
             >
               {/* Luxury Golden Ring */}
               <motion.div
