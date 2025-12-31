@@ -147,7 +147,7 @@ export default function ChangePassword() {
               <div className="flex gap-3 pt-4">
                 <Button
                   type="submit"
-                  className="bg-gradient-to-r from-[#c8a870] to-[#d4b886] text-white border-0 hover:from-[#b89860] hover:to-[#c8a870] shadow-md"
+                  variant="admin"
                   disabled={isLoading}
                 >
                   {isLoading ? (lang === 'ar' ? "جاري التحديث..." : "Updating...") : (lang === 'ar' ? "تحديث كلمة المرور" : "Update Password")}

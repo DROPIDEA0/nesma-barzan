@@ -172,7 +172,7 @@ export default function AdminProjects() {
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-gradient-to-r from-[#c8a870] to-[#d4b886] text-white border-0 hover:from-[#b89860] hover:to-[#c8a870]">
+              <Button variant="admin">
                 <Plus className="h-4 w-4 me-2" />
                 {t('admin.add')}
               </Button>
@@ -249,7 +249,7 @@ export default function AdminProjects() {
                     />
                   </div>
                 </div>
-                <Button onClick={handleCreate} disabled={createMutation.isPending} className="w-full">
+                <Button onClick={handleCreate} disabled={createMutation.isPending} variant="admin" className="w-full">
                   <Save className="h-4 w-4 me-2" />
                   {t('admin.save')}
                 </Button>
@@ -426,7 +426,7 @@ export default function AdminProjects() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button onClick={handleUpdate} disabled={updateMutation.isPending} className="flex-1">
+                  <Button onClick={handleUpdate} disabled={updateMutation.isPending} variant="admin" className="flex-1">
                     <Save className="h-4 w-4 me-2" />
                     {t('admin.save')}
                   </Button>

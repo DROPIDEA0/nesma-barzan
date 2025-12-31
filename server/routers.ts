@@ -190,11 +190,11 @@ export const appRouter = router({
     upsert: adminProcedure
       .input(z.object({
         key: z.string(),
-        titleAr: z.string().optional(),
-        titleEn: z.string().optional(),
-        contentAr: z.string().optional(),
-        contentEn: z.string().optional(),
+        value_ar: z.string().optional(),
+        value_en: z.string().optional(),
         section: z.string(),
+        description_ar: z.string().optional(),
+        description_en: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
         await db.upsertSiteContent(input);

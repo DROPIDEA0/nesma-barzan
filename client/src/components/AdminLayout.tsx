@@ -183,7 +183,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <div className="p-6 lg:p-8">
           {/* Desktop Language Toggle */}
           <div className="hidden lg:flex justify-end mb-6">
-            <Button variant="outline" size="sm" onClick={toggleLanguage} className="gap-2 border-[#c8a870] text-[#c8a870] hover:bg-[#c8a870] hover:text-white">
+            <Button variant="admin" size="sm" onClick={toggleLanguage} className="gap-2">
               <Globe className="h-4 w-4" />
               {lang === 'ar' ? 'English' : 'عربي'}
             </Button>

@@ -163,7 +163,7 @@ export default function AdminImages() {
               <Button
                 onClick={handleUpload}
                 disabled={!selectedFile || uploadMutation.isPending}
-                className="bg-gradient-to-r from-[#c8a870] to-[#d4b886] text-white border-0 hover:from-[#b89860] hover:to-[#c8a870]"
+                variant="admin"
               >
                 {uploadMutation.isPending ? (
                   <Loader2 className="h-4 w-4 me-2 animate-spin" />

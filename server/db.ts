@@ -168,11 +168,11 @@ export async function upsertSiteContent(data: InsertSiteContent) {
   await db.insert(siteContent).values(data)
     .onDuplicateKeyUpdate({
       set: {
-        titleAr: data.titleAr,
-        titleEn: data.titleEn,
-        contentAr: data.contentAr,
-        contentEn: data.contentEn,
+        value_ar: data.value_ar,
+        value_en: data.value_en,
         section: data.section,
+        description_ar: data.description_ar,
+        description_en: data.description_en,
       },
     });
 }

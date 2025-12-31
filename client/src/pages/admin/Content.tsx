@@ -200,7 +200,7 @@ export default function AdminContent() {
                             <Button
                               onClick={() => handleSave(item)}
                               disabled={upsertMutation.isPending}
-                              className="bg-gradient-to-r from-[#c8a870] to-[#d4b886] text-white border-0 hover:from-[#b89860] hover:to-[#c8a870]"
+                              variant="admin"
                             >
                               <Save className="h-4 w-4 me-2" />
                               {lang === 'ar' ? 'حفظ' : 'Save'}

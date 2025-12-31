@@ -308,7 +308,7 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button type="submit" disabled={upsertSetting.isPending}>
+                  <Button type="submit" disabled={upsertSetting.isPending} variant="admin">
                     <Save className="h-4 w-4 mr-2" />
                     {lang === 'ar' ? 'حفظ التغييرات' : 'Save Changes'}
                   </Button>
@@ -387,7 +387,7 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button type="submit" disabled={upsertSetting.isPending}>
+                  <Button type="submit" disabled={upsertSetting.isPending} variant="admin">
                     <Save className="h-4 w-4 mr-2" />
                     {lang === 'ar' ? 'حفظ التغييرات' : 'Save Changes'}
                   </Button>
