@@ -97,8 +97,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     }
 
     await db.insert(users).values(values)
-      .onConflictDoUpdate({
-        target: users.openId,
+      .onDuplicateKeyUpdate({
         set: updateSet,
       });
   } catch (error) {
@@ -167,8 +166,7 @@ export async function upsertSiteContent(data: InsertSiteContent) {
   if (!db) throw new Error("Database not available");
   
   await db.insert(siteContent).values(data)
-    .onConflictDoUpdate({
-      target: siteContent.key,
+    .onDuplicateKeyUpdate({
       set: {
         titleAr: data.titleAr,
         titleEn: data.titleEn,
@@ -295,8 +293,7 @@ export async function upsertSetting(setting: any) {
     // Don't include timestamps, let SQLite handle them with DEFAULT values
     const { createdAt, updatedAt, ...cleanSetting } = setting;
     await db.insert(siteSettings).values(cleanSetting as any)
-      .onConflictDoUpdate({
-        target: siteSettings.key,
+      .onDuplicateKeyUpdate({
         set: cleanSetting as any,
       });
   } catch (error) {
