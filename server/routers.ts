@@ -1,5 +1,6 @@
-import { COOKIE_NAME } from "@shared/const";
+import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
+import { sdk } from "./_core/sdk";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
@@ -112,9 +113,16 @@ export const appRouter = router({
           console.error('[Login] Failed to update last signed in:', error);
         }
 
-        // Set session cookie
+        // Create JWT session token
+        const sessionToken = await sdk.signSession({
+          openId: user.openId || `user-${user.id}`,
+          appId: 'nesma-barzan',
+          name: user.name || user.username || '',
+        }, { expiresInMs: ONE_YEAR_MS });
+        
+        // Set session cookie with JWT token
         const cookieOptions = getSessionCookieOptions(ctx.req);
-        ctx.res.cookie(COOKIE_NAME, JSON.stringify(user), cookieOptions);
+        ctx.res.cookie(COOKIE_NAME, sessionToken, cookieOptions);
         
         return { success: true, user };
       }),
