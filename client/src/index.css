@@ -127,6 +127,17 @@
     font-family: 'Tajawal', sans-serif;
   }
   
+  /* Dark text for all input fields */
+  input, textarea, select {
+    @apply text-gray-900;
+    font-weight: 600;
+  }
+  
+  input::placeholder, textarea::placeholder {
+    @apply text-gray-400;
+    font-weight: 400;
+  }
+  
   /* RTL Support */
   [dir="rtl"] {
     font-family: 'Tajawal', sans-serif;
