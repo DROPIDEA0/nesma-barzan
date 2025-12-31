@@ -106,12 +106,20 @@ export default function Home() {
   const { lang, t, isRTL } = useLanguage();
   const { data: projectsData } = trpc.projects.getActive.useQuery();
   const { data: siteContent } = trpc.content.getAll.useQuery();
+  const { data: settings } = trpc.settings.getAll.useQuery();
   
   // Helper function to get content by key
   const getContent = (key: string) => {
     const content = siteContent?.find(c => c.key === key);
     return lang === 'ar' ? content?.value_ar : content?.value_en;
   };
+
+  // Helper function to get setting by key
+  const getSetting = (key: string) => {
+    return settings?.find(s => s.key === key)?.value;
+  };
+
+  const siteName = lang === 'ar' ? (getSetting('site_name_ar') || 'نسمة برزان التجارية') : (getSetting('site_name_en') || 'Nesma Barzan Trading');
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);

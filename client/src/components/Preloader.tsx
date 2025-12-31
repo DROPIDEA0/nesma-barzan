@@ -4,6 +4,7 @@ import { trpc } from '@/lib/trpc';
 export function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
   const { data: settings } = trpc.settings.getAll.useQuery();
+  const { data: siteContent } = trpc.content.getAll.useQuery();
   
   // Get language from localStorage (same as LanguageContext)
   const lang = typeof window !== 'undefined' ? (localStorage.getItem('language') || 'ar') : 'ar';
@@ -12,7 +13,12 @@ export function Preloader() {
     return settings?.find(s => s.key === key)?.value;
   };
 
-  const siteLogo = getSetting('site_logo') || '/logo.png';
+  const getContent = (key: string) => {
+    const content = siteContent?.find(c => c.key === key);
+    return lang === 'ar' ? content?.value_ar : content?.value_en;
+  };
+
+  const siteLogo = getContent('preloader_logo') || getSetting('site_logo') || '/logo.png';
   const siteName = lang === 'ar' ? (getSetting('site_name_ar') || 'نسمة برزان التجارية') : (getSetting('site_name_en') || 'Nesma Barzan Trading');
 
   useEffect(() => {

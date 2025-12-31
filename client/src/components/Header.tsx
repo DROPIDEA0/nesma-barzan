@@ -27,7 +27,7 @@ export function Header() {
     return settings?.find(s => s.key === key)?.value;
   };
 
-  const siteLogo = getSetting('site_logo') || '/logo.png';
+  const siteLogo = getContent('header_logo') || getSetting('site_logo') || '/logo.png';
   const siteName = lang === 'ar' ? (getSetting('site_name_ar') || 'نسمة برزان') : (getSetting('site_name_en') || 'Nesma Barzan');
 
   const navItems = [
