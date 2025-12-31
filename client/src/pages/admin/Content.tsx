@@ -135,21 +135,14 @@ export default function AdminContent() {
                     groupedContent[section.id].map((item: any) => (
                       <Card key={item.key} className="border-l-4 border-l-[#c8a870]">
                         <CardContent className="pt-6 space-y-4">
-                          {/* Title and Description */}
-                          <div className="flex flex-col gap-2 pb-4 border-b">
-                            <div className="flex items-center gap-3">
-                              {item.icon && (
-                                <span className="text-2xl">{item.icon}</span>
-                              )}
-                              <h3 className="text-lg font-bold text-gray-900">
-                                {lang === 'ar' ? item.label_ar || item.key : item.label_en || item.key}
-                              </h3>
-                            </div>
-                            {item.description_ar && (
-                              <p className="text-sm text-gray-600">
-                                {lang === 'ar' ? item.description_ar : item.description_en}
-                              </p>
+                          {/* Title */}
+                          <div className="flex items-center gap-3 pb-4 border-b">
+                            {item.icon && (
+                              <span className="text-2xl">{item.icon}</span>
                             )}
+                            <h3 className="text-lg font-bold text-gray-900">
+                              {lang === 'ar' ? item.label_ar || item.key : item.label_en || item.key}
+                            </h3>
                           </div>
 
                           <div className="grid md:grid-cols-2 gap-4">
