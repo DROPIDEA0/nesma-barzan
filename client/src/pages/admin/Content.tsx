@@ -149,7 +149,7 @@ export default function AdminContent() {
                 <TabsTrigger
                   key={section.id}
                   value={section.id}
-                  className="flex items-center gap-2 bg-white text-[#c8a870] border-2 border-[#c8a870] data-[state=active]:bg-[#c8a870] data-[state=active]:text-white hover:bg-[#c8a870] hover:text-white transition-all duration-300"
+                  className="flex items-center gap-2 bg-white text-[#0DCAF0] border-2 border-[#0DCAF0] data-[state=active]:bg-[#0DCAF0] data-[state=active]:text-white hover:bg-[#0DCAF0] hover:text-white transition-all duration-300"
                 >
                   <Icon className="h-4 w-4" />
                   <span className="hidden sm:inline">{section.name}</span>
@@ -163,14 +163,14 @@ export default function AdminContent() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <section.icon className="h-5 w-5 text-[#c8a870]" />
+                    <section.icon className="h-5 w-5 text-[#0DCAF0]" />
                     {section.name}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {groupedContent[section.id]?.length > 0 ? (
                     groupedContent[section.id].map((item: any) => (
-                      <Card key={item.key} className="border-l-4 border-l-[#c8a870]">
+                      <Card key={item.key} className="border-l-4 border-l-[#0DCAF0]">
                         <CardContent className="pt-6 space-y-4">
                           {/* Title */}
                           <div className="flex items-center gap-3 pb-4 border-b">
@@ -200,7 +200,7 @@ export default function AdminContent() {
                               <div className="flex flex-col items-center gap-4">
                                 <Label 
                                   htmlFor="preloader-logo-upload" 
-                                  className="cursor-pointer flex items-center gap-2 px-6 py-3 bg-white text-[#c8a870] border-2 border-[#c8a870] rounded-lg hover:bg-[#c8a870] hover:text-white transition-all duration-300"
+                                  className="cursor-pointer flex items-center gap-2 px-6 py-3 bg-white text-[#0DCAF0] border-2 border-[#0DCAF0] rounded-lg hover:bg-[#0DCAF0] hover:text-white transition-all duration-300"
                                 >
                                   <Upload className="h-5 w-5" />
                                   {lang === 'ar' ? 'رفع صورة اللوجو' : 'Upload Logo Image'}
@@ -238,14 +238,14 @@ export default function AdminContent() {
                               <div className="flex items-center justify-center gap-4 p-6 bg-gray-50 rounded-lg">
                                 <div 
                                   className="w-24 h-24 rounded-full border-4 border-gray-200"
-                                  style={{ backgroundColor: getValueAr(item) || '#c8a870' }}
+                                  style={{ backgroundColor: getValueAr(item) || '#0DCAF0' }}
                                 />
                                 <div className="text-center">
                                   <p className="text-sm text-gray-600 mb-2">
                                     {lang === 'ar' ? 'اللون الحالي' : 'Current Color'}
                                   </p>
                                   <p className="text-lg font-bold text-gray-900">
-                                    {getValueAr(item) || '#c8a870'}
+                                    {getValueAr(item) || '#0DCAF0'}
                                   </p>
                                 </div>
                               </div>
@@ -258,7 +258,7 @@ export default function AdminContent() {
                                 <div className="flex gap-4 items-center">
                                   <input
                                     type="color"
-                                    value={getValueAr(item) || '#c8a870'}
+                                    value={getValueAr(item) || '#0DCAF0'}
                                     onChange={(e) => {
                                       handleChange(item.key, 'value_ar', e.target.value);
                                       handleChange(item.key, 'value_en', e.target.value);
@@ -272,7 +272,7 @@ export default function AdminContent() {
                                       handleChange(item.key, 'value_en', e.target.value);
                                     }}
                                     className="font-semibold text-gray-900 text-base"
-                                    placeholder="#c8a870"
+                                    placeholder="#0DCAF0"
                                     dir="ltr"
                                   />
                                 </div>
@@ -295,7 +295,7 @@ export default function AdminContent() {
                               <div className="flex flex-col items-center gap-4">
                                 <Label 
                                   htmlFor="hero-logo-upload" 
-                                  className="cursor-pointer flex items-center gap-2 px-6 py-3 bg-white text-[#c8a870] border-2 border-[#c8a870] rounded-lg hover:bg-[#c8a870] hover:text-white transition-all duration-300"
+                                  className="cursor-pointer flex items-center gap-2 px-6 py-3 bg-white text-[#0DCAF0] border-2 border-[#0DCAF0] rounded-lg hover:bg-[#0DCAF0] hover:text-white transition-all duration-300"
                                 >
                                   <Upload className="h-5 w-5" />
                                   {lang === 'ar' ? 'رفع صورة اللوجو' : 'Upload Logo Image'}

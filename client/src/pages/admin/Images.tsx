@@ -184,7 +184,7 @@ export default function AdminImages() {
           
           {isLoading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#c8a870] mx-auto"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0DCAF0] mx-auto"></div>
               <p className="text-gray-600 mt-4">{lang === 'ar' ? 'جاري التحميل...' : 'Loading...'}</p>
             </div>
           ) : images && images.length > 0 ? (

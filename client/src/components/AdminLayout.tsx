@@ -109,8 +109,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                 isActive
-                  ? 'bg-gradient-to-r from-[#c8a870] to-[#d4b886] text-white shadow-md'
-                  : 'text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-[#c8a870]'
+                  ? 'bg-gradient-to-r from-[#0DCAF0] to-[#48CAE4] text-white shadow-md'
+                  : 'text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-[#0DCAF0]'
               }`}
             >
               <item.icon className="h-5 w-5" />
@@ -125,14 +125,14 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <Link
           href="/admin/change-password"
           onClick={() => setSidebarOpen(false)}
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-[#c8a870] transition-colors"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-[#0DCAF0] transition-colors"
         >
           <Key className="h-5 w-5" />
           <span>{lang === 'ar' ? 'تغيير كلمة المرور' : 'Change Password'}</span>
         </Link>
         <Link
           href="/"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-[#c8a870] transition-colors"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-[#0DCAF0] transition-colors"
         >
           <ArrowLeft className="h-5 w-5" />
           <span>{lang === 'ar' ? 'العودة للموقع' : 'Back to Site'}</span>

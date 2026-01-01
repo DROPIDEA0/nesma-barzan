@@ -20,7 +20,7 @@ export function Preloader() {
 
   const siteLogo = getContent('preloader_logo') || getSetting('site_logo') || '/logo.png';
   const siteName = lang === 'ar' ? (getSetting('site_name_ar') || 'نسمة برزان التجارية') : (getSetting('site_name_en') || 'Nesma Barzan Trading');
-  const loaderColor = getContent('preloader_color') || '#c8a870';
+  const loaderColor = getContent('preloader_color') || '#0DCAF0';
 
   useEffect(() => {
     // Hide preloader after page loads

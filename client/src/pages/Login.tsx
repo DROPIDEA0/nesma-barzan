@@ -43,7 +43,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="space-y-3 text-center">
-          <div className="mx-auto w-20 h-20 bg-gradient-to-br from-[#c8a870] to-[#d4b886] rounded-full flex items-center justify-center">
+          <div className="mx-auto w-20 h-20 bg-gradient-to-br from-[#0DCAF0] to-[#48CAE4] rounded-full flex items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -96,7 +96,7 @@ export default function Login() {
             </div>
             <Button
               type="submit"
-              className="w-full bg-[#c8a870] hover:bg-[#b89860] text-white font-semibold py-6 text-lg"
+              className="w-full bg-[#0DCAF0] hover:bg-[#00B4D8] text-white font-semibold py-6 text-lg"
               disabled={isLoading}
             >
               {isLoading ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}

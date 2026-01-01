@@ -64,7 +64,7 @@ export default function ChangePassword() {
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center gap-3">
-          <div className="p-3 rounded-lg bg-gradient-to-br from-[#c8a870] to-[#d4b886]">
+          <div className="p-3 rounded-lg bg-gradient-to-br from-[#0DCAF0] to-[#48CAE4]">
             <Key className="h-6 w-6 text-white" />
           </div>
           <div>
@@ -101,7 +101,7 @@ export default function ChangePassword() {
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="text-right border-gray-300 focus:border-[#c8a870] focus:ring-[#c8a870]"
+                  className="text-right border-gray-300 focus:border-[#0DCAF0] focus:ring-[#0DCAF0]"
                   dir="rtl"
                 />
               </div>
@@ -118,7 +118,7 @@ export default function ChangePassword() {
                   onChange={(e) => setNewPassword(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="text-right border-gray-300 focus:border-[#c8a870] focus:ring-[#c8a870]"
+                  className="text-right border-gray-300 focus:border-[#0DCAF0] focus:ring-[#0DCAF0]"
                   dir="rtl"
                 />
                 <p className="text-sm text-gray-500 flex items-center gap-1">
@@ -139,7 +139,7 @@ export default function ChangePassword() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="text-right border-gray-300 focus:border-[#c8a870] focus:ring-[#c8a870]"
+                  className="text-right border-gray-300 focus:border-[#0DCAF0] focus:ring-[#0DCAF0]"
                   dir="rtl"
                 />
               </div>
