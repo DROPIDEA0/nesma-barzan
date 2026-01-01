@@ -6,7 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { Preloader } from "./components/Preloader";
 
@@ -51,6 +51,32 @@ function Router() {
 }
 
 function App() {
+  useEffect(() => {
+    // Dynamically update favicon from settings
+    const updateFavicon = async () => {
+      try {
+        const response = await fetch('/api/trpc/settings.getAll');
+        const data = await response.json();
+        const settings = data?.result?.data;
+        const faviconSetting = settings?.find((s: any) => s.key === 'site_favicon');
+        
+        if (faviconSetting?.value) {
+          const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement || document.createElement('link');
+          link.type = 'image/x-icon';
+          link.rel = 'icon';
+          link.href = faviconSetting.value;
+          if (!document.querySelector("link[rel~='icon']")) {
+            document.head.appendChild(link);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to update favicon:', error);
+      }
+    };
+    
+    updateFavicon();
+  }, []);
+
   return (
     <ErrorBoundary>
       <Preloader />

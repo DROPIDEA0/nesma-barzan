@@ -186,6 +186,118 @@ export default function AdminSettings() {
           </CardContent>
         </Card>
 
+        {/* Admin Panel Settings */}
+        <Card className="bg-white border-2 border-gray-200">
+          <CardHeader>
+            <CardTitle className="text-gray-900">{lang === 'ar' ? 'إعدادات لوحة التحكم' : 'Admin Panel Settings'}</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Admin Logo */}
+            <div className="space-y-2">
+              <Label>{lang === 'ar' ? 'لوجو لوحة التحكم' : 'Admin Panel Logo'}</Label>
+              <div className="flex items-center gap-4">
+                {getSetting('admin_logo')?.value && (
+                  <div className="w-32 h-32 border rounded-lg overflow-hidden bg-white p-2">
+                    <img 
+                      src={getSetting('admin_logo')?.value} 
+                      alt="Admin Logo" 
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                )}
+                <div>
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const reader = new FileReader();
+                      reader.onload = async (event) => {
+                        const base64Data = event.target?.result as string;
+                        const base64 = base64Data.split(',')[1];
+                        try {
+                          const result = await uploadImage.mutateAsync({
+                            filename: file.name,
+                            base64Data: base64,
+                            mimeType: file.type,
+                            altTextAr: 'لوجو لوحة التحكم',
+                            altTextEn: 'Admin Panel Logo',
+                          });
+                          await handleSaveSetting('admin_logo', result.url, 'image', 'admin', 'لوجو لوحة التحكم', 'Admin Panel Logo');
+                          toast.success(lang === 'ar' ? 'تم رفع اللوجو بنجاح' : 'Logo uploaded successfully');
+                        } catch (error) {
+                          toast.error(lang === 'ar' ? 'فشل رفع اللوجو' : 'Failed to upload logo');
+                        }
+                      };
+                      reader.readAsDataURL(file);
+                    }}
+                    className="hidden"
+                    id="admin-logo-upload"
+                  />
+                  <Label htmlFor="admin-logo-upload">
+                    <Button variant="outline" asChild>
+                      <span>
+                        <Upload className="h-4 w-4 mr-2" />
+                        {lang === 'ar' ? 'رفع لوجو جديد' : 'Upload New Logo'}
+                      </span>
+                    </Button>
+                  </Label>
+                </div>
+              </div>
+            </div>
+
+            {/* Admin Panel Name */}
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              handleSaveSetting(
+                'admin_name_ar',
+                formData.get('admin_name_ar') as string,
+                'text',
+                'admin',
+                'اسم لوحة التحكم بالعربي',
+                'Admin Panel Name (Arabic)'
+              );
+              handleSaveSetting(
+                'admin_name_en',
+                formData.get('admin_name_en') as string,
+                'text',
+                'admin',
+                'اسم لوحة التحكم بالإنجليزي',
+                'Admin Panel Name (English)'
+              );
+            }}>
+              <div className="grid gap-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="admin_name_ar">{lang === 'ar' ? 'اسم لوحة التحكم (عربي)' : 'Admin Panel Name (Arabic)'}</Label>
+                    <Input
+                      id="admin_name_ar"
+                      name="admin_name_ar"
+                      defaultValue={getSetting('admin_name_ar')?.value || 'نسمة برزان'}
+                      placeholder={lang === 'ar' ? 'أدخل اسم لوحة التحكم بالعربي' : 'Enter admin panel name in Arabic'}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="admin_name_en">{lang === 'ar' ? 'اسم لوحة التحكم (إنجليزي)' : 'Admin Panel Name (English)'}</Label>
+                    <Input
+                      id="admin_name_en"
+                      name="admin_name_en"
+                      defaultValue={getSetting('admin_name_en')?.value || 'Nesma Barzan'}
+                      placeholder={lang === 'ar' ? 'أدخل اسم لوحة التحكم بالإنجليزي' : 'Enter admin panel name in English'}
+                    />
+                  </div>
+                </div>
+                <Button type="submit" className="w-full">
+                  <Save className="h-4 w-4 mr-2" />
+                  {lang === 'ar' ? 'حفظ' : 'Save'}
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+
         {/* Site Information */}
         <Card className="bg-white border-2 border-gray-200">
           <CardHeader>

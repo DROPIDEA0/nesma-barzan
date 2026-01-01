@@ -18,6 +18,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
 import { getLoginUrl } from '@/const';
+import { trpc } from '@/lib/trpc';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -28,6 +29,14 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const { user, isAuthenticated, logout, loading } = useAuth();
   const [location] = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { data: settings } = trpc.settings.getAll.useQuery();
+
+  const getSetting = (key: string) => {
+    return settings?.find(s => s.key === key)?.value;
+  };
+
+  const adminLogo = getSetting('admin_logo') || '/logo.png';
+  const adminName = lang === 'ar' ? (getSetting('admin_name_ar') || 'نسمة برزان') : (getSetting('admin_name_en') || 'Nesma Barzan');
 
   const isAdmin = user?.role === 'admin';
 
@@ -88,10 +97,10 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       {/* Logo */}
       <div className="p-6 border-b-2 border-gray-200">
         <Link href="/" className="flex items-center gap-3">
-          <img src="/logo.png" alt="Nesma Barzan" className="h-10 w-auto bg-white rounded p-1" />
+          <img src={adminLogo} alt={adminName} className="h-10 w-auto bg-white rounded p-1" />
           <div>
             <h1 className="font-bold text-gray-900">
-              {lang === 'ar' ? 'نسمة برزان' : 'Nesma Barzan'}
+              {adminName}
             </h1>
             <p className="text-xs text-gray-600">{t('admin.title')}</p>
           </div>
