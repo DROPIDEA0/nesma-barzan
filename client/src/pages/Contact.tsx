@@ -53,6 +53,7 @@ export default function Contact() {
     onError: (error) => {
       toast.error(isRTL ? 'فشل إرسال الرسالة. حاول مرة أخرى.' : 'Failed to send message. Please try again.');
       console.error('Error sending message:', error);
+      console.error('Error details:', JSON.stringify(error, null, 2));
       setIsSubmitting(false);
     }
   });
@@ -66,6 +67,7 @@ export default function Contact() {
     }
     
     setIsSubmitting(true);
+    console.log('Sending contact message:', formData);
     createMessage.mutate(formData);
   };
   
