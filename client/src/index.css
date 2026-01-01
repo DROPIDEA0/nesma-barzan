@@ -665,3 +665,16 @@
     font-weight: 600 !important;
     color: #2a2a2a !important;
   }
+
+/* Tabs active state - selected tab with blue background */
+[role="tablist"] button[data-state="active"],
+[role="tablist"] button[aria-selected="true"] {
+  background-color: #0DCAF0 !important;
+  color: white !important;
+  border-color: #0DCAF0 !important;
+}
+
+[role="tablist"] button[data-state="active"]:hover,
+[role="tablist"] button[aria-selected="true"]:hover {
+  background-color: #00B4D8 !important;
+}
