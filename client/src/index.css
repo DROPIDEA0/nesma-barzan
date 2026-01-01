@@ -639,3 +639,29 @@
   a[href*="/admin"]:active {
     background-color: #00B4D8 !important;
   }
+
+  /* Dialog/Modal Titles - Bold and Dark */
+  [role="dialog"] h2,
+  [role="dialog"] h3,
+  [role="alertdialog"] h2,
+  [role="alertdialog"] h3,
+  .dialog-title {
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+  }
+  
+  /* Placeholders - Dark Color */
+  [role="dialog"] input::placeholder,
+  [role="dialog"] textarea::placeholder,
+  [role="alertdialog"] input::placeholder,
+  [role="alertdialog"] textarea::placeholder {
+    color: #4a4a4a !important;
+    opacity: 0.8 !important;
+  }
+  
+  /* Labels in Dialogs - Bold */
+  [role="dialog"] label,
+  [role="alertdialog"] label {
+    font-weight: 600 !important;
+    color: #2a2a2a !important;
+  }

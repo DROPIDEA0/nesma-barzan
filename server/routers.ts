@@ -226,6 +226,7 @@ export const appRouter = router({
         descriptionEn: z.string().optional(),
         imageUrl: z.string().optional(),
         imageKey: z.string().optional(),
+        projectUrl: z.string().optional(),
         isActive: z.boolean().default(true),
         sortOrder: z.number().default(0),
       }))
@@ -243,6 +244,7 @@ export const appRouter = router({
         descriptionEn: z.string().optional(),
         imageUrl: z.string().optional(),
         imageKey: z.string().optional(),
+        projectUrl: z.string().optional(),
         isActive: z.boolean().optional(),
         sortOrder: z.number().optional(),
       }))

@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { trpc } from '@/lib/trpc';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { toast } from 'sonner';
 import { Save, Plus, Trash2, Edit, Image } from 'lucide-react';
 import {
@@ -32,7 +32,10 @@ import {
 export default function AdminProjects() {
   const { lang, t } = useLanguage();
   const utils = trpc.useUtils();
-  const { data: projects, isLoading } = trpc.projects.getAll.useQuery();
+  const { data: projects, isLoading } = trpc.projects.getAll.useQuery(undefined, {
+    staleTime: 30000, // 30 seconds
+    refetchOnWindowFocus: false,
+  });
   const { data: images } = trpc.images.getAll.useQuery();
 
   const createMutation = trpc.projects.create.useMutation({
@@ -78,6 +81,7 @@ export default function AdminProjects() {
     descriptionEn: '',
     imageUrl: '',
     imageKey: '',
+    projectUrl: '',
     isActive: true,
     sortOrder: 0,
   });
@@ -90,6 +94,7 @@ export default function AdminProjects() {
       descriptionEn: '',
       imageUrl: '',
       imageKey: '',
+      projectUrl: '',
       isActive: true,
       sortOrder: 0,
     });
@@ -113,6 +118,7 @@ export default function AdminProjects() {
       descriptionEn: editingProject.descriptionEn,
       imageUrl: editingProject.imageUrl,
       imageKey: editingProject.imageKey,
+      projectUrl: editingProject.projectUrl || '',
       isActive: editingProject.isActive,
       sortOrder: editingProject.sortOrder,
     });
@@ -161,7 +167,7 @@ export default function AdminProjects() {
 
   return (
     <AdminLayout>
-      <div className="space-y-6">
+      <div className="space-y-6" key="projects-page">
         {/* Header */}
         <div className="flex justify-between items-center">
           <div>
@@ -230,6 +236,15 @@ export default function AdminProjects() {
                       </div>
                     )}
                   </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>{lang === 'ar' ? 'رابط المشروع' : 'Project URL'}</Label>
+                  <Input
+                    value={newProject.projectUrl}
+                    onChange={(e) => setNewProject({ ...newProject, projectUrl: e.target.value })}
+                    placeholder="https://example.com"
+                    dir="ltr"
+                  />
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
@@ -406,6 +421,15 @@ export default function AdminProjects() {
                       </div>
                     )}
                   </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>{lang === 'ar' ? 'رابط المشروع' : 'Project URL'}</Label>
+                  <Input
+                    value={editingProject.projectUrl || ''}
+                    onChange={(e) => setEditingProject({ ...editingProject, projectUrl: e.target.value })}
+                    placeholder="https://example.com"
+                    dir="ltr"
+                  />
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">

@@ -162,7 +162,7 @@ export default function AdminContent() {
             <TabsContent key={section.id} value={section.id} className="space-y-4">
               <Card className="bg-white">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2 text-gray-900 font-bold">
                     <section.icon className="h-5 w-5 text-[#0DCAF0]" />
                     {section.name}
                   </CardTitle>

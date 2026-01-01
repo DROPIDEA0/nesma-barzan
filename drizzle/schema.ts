@@ -52,6 +52,7 @@ export const projects = mysqlTable("projects", {
   descriptionEn: text("descriptionEn"),
   imageUrl: text("imageUrl"),
   imageKey: varchar("imageKey", { length: 255 }),
+  projectUrl: text("projectUrl"),
   isActive: boolean("isActive").default(true).notNull(),
   sortOrder: int("sortOrder").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
