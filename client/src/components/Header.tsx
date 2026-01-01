@@ -4,7 +4,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe, Download } from 'lucide-react';
 import { getLoginUrl } from '@/const';
 import { trpc } from '@/lib/trpc';
 
@@ -91,6 +91,21 @@ export function Header() {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
+            {/* Company Profile Download Button */}
+            {getSetting('company_profile_enabled') === 'true' && getSetting('company_profile_file') && (
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+                className="gap-2 hidden sm:flex"
+              >
+                <a href={getSetting('company_profile_file')} download target="_blank" rel="noopener noreferrer">
+                  <Download className="h-4 w-4" />
+                  <span>{lang === 'ar' ? (getSetting('company_profile_label_ar') || 'تحميل البروفايل') : (getSetting('company_profile_label_en') || 'Download Profile')}</span>
+                </a>
+              </Button>
+            )}
+
             {/* Language Toggle */}
             <Button
               variant="ghost"

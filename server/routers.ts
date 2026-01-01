@@ -450,6 +450,52 @@ export const appRouter = router({
   }),
 
   // Images Management
+  // File Upload for Company Profile
+  files: router({ 
+    uploadProfile: adminProcedure
+      .input(z.object({
+        filename: z.string(),
+        base64Data: z.string(),
+        mimeType: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const buffer = Buffer.from(input.base64Data, 'base64');
+        const filename = `profile-${nanoid()}-${input.filename}`;
+        
+        // Save file locally to public/uploads
+        const fs = await import('fs/promises');
+        const path = await import('path');
+        const isProduction = process.env.NODE_ENV === 'production';
+        const uploadsDir = isProduction 
+          ? path.join(process.cwd(), 'dist', 'public', 'uploads')
+          : path.join(process.cwd(), 'client', 'public', 'uploads');
+        
+        // Create uploads directory if it doesn't exist
+        try {
+          await fs.mkdir(uploadsDir, { recursive: true });
+        } catch (err) {
+          // Directory already exists
+        }
+        
+        const filePath = path.join(uploadsDir, filename);
+        await fs.writeFile(filePath, buffer);
+        
+        const url = `/uploads/${filename}`;
+        
+        // Update setting
+        await db.upsertSetting({
+          key: 'company_profile_file',
+          value: url,
+          type: 'text',
+          category: 'general',
+          labelAr: 'ملف البروفايل',
+          labelEn: 'Company Profile File'
+        });
+        
+        return { url };
+      }),
+  }),
+
   images: router({
     getAll: publicProcedure.query(async () => {
       return db.getAllImages();

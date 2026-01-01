@@ -27,6 +27,7 @@ export default function AdminSettings() {
   });
 
   const uploadImage = trpc.images.upload.useMutation();
+  const uploadProfile = trpc.files.uploadProfile.useMutation();
 
   const getSetting = (key: string) => {
     return settings?.find(s => s.key === key);
@@ -545,6 +546,197 @@ export default function AdminSettings() {
                       defaultValue={getSetting('contact_address_en')?.value || ''}
                       placeholder="Riyadh, Saudi Arabia"
                     />
+                  </div>
+                </div>
+
+                <div className="flex justify-end">
+                  <Button type="submit" disabled={upsertSetting.isPending} variant="admin">
+                    <Save className="h-4 w-4 mr-2" />
+                    {lang === 'ar' ? 'حفظ التغييرات' : 'Save Changes'}
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Company Profile & WhatsApp Settings */}
+        <Card className="bg-white border-2 border-gray-200">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold text-gray-900">
+              {lang === 'ar' ? 'إعدادات البروفايل والواتساب' : 'Profile & WhatsApp Settings'}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={async (e) => {
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              
+              const settings = [
+                { key: 'company_profile_enabled', value: formData.get('company_profile_enabled') === 'on' ? 'true' : 'false', type: 'boolean', category: 'general', labelAr: 'تفعيل زر تنزيل البروفايل', labelEn: 'Enable Profile Download Button' },
+                { key: 'company_profile_label_ar', value: formData.get('company_profile_label_ar') as string, type: 'text', category: 'general', labelAr: 'نص الزر (عربي)', labelEn: 'Button Text (Arabic)' },
+                { key: 'company_profile_label_en', value: formData.get('company_profile_label_en') as string, type: 'text', category: 'general', labelAr: 'نص الزر (إنجليزي)', labelEn: 'Button Text (English)' },
+                { key: 'whatsapp_enabled', value: formData.get('whatsapp_enabled') === 'on' ? 'true' : 'false', type: 'boolean', category: 'contact', labelAr: 'تفعيل زر الواتساب', labelEn: 'Enable WhatsApp Button' },
+                { key: 'whatsapp_number', value: formData.get('whatsapp_number') as string, type: 'text', category: 'contact', labelAr: 'رقم الواتساب', labelEn: 'WhatsApp Number' },
+                { key: 'whatsapp_position', value: formData.get('whatsapp_position') as string, type: 'text', category: 'contact', labelAr: 'موضع الزر', labelEn: 'Button Position' },
+                { key: 'whatsapp_message_ar', value: formData.get('whatsapp_message_ar') as string, type: 'text', category: 'contact', labelAr: 'الرسالة الافتراضية (عربي)', labelEn: 'Default Message (Arabic)' },
+                { key: 'whatsapp_message_en', value: formData.get('whatsapp_message_en') as string, type: 'text', category: 'contact', labelAr: 'الرسالة الافتراضية (إنجليزي)', labelEn: 'Default Message (English)' },
+              ];
+              
+              for (const setting of settings) {
+                await handleSaveSetting(setting.key, setting.value, setting.type, setting.category, setting.labelAr, setting.labelEn);
+              }
+            }}>
+              <div className="space-y-6">
+                {/* Company Profile Section */}
+                <div className="space-y-4 p-4 border-2 border-gray-200 rounded-lg">
+                  <h3 className="text-lg font-bold text-gray-900">
+                    {lang === 'ar' ? 'زر تنزيل بروفايل الشركة' : 'Company Profile Download Button'}
+                  </h3>
+                  
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="company_profile_enabled"
+                      name="company_profile_enabled"
+                      defaultChecked={getSetting('company_profile_enabled')?.value === 'true'}
+                      className="w-4 h-4"
+                    />
+                    <Label htmlFor="company_profile_enabled">
+                      {lang === 'ar' ? 'تفعيل زر تنزيل البروفايل' : 'Enable Profile Download Button'}
+                    </Label>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>{lang === 'ar' ? 'ملف البروفايل' : 'Profile File'}</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          
+                          const reader = new FileReader();
+                          reader.onload = async (event) => {
+                            const base64Data = event.target?.result as string;
+                            const base64 = base64Data.split(',')[1];
+                            
+                            try {
+                              const result = await uploadProfile.mutateAsync({
+                                filename: file.name,
+                                base64Data: base64,
+                                mimeType: file.type,
+                              });
+                              
+                              toast.success(lang === 'ar' ? 'تم رفع الملف بنجاح' : 'File uploaded successfully');
+                              refetch();
+                            } catch (error) {
+                              toast.error(lang === 'ar' ? 'فشل رفع الملف' : 'Failed to upload file');
+                            }
+                          };
+                          reader.readAsDataURL(file);
+                        }}
+                      />
+                      {getSetting('company_profile_file')?.value && (
+                        <a
+                          href={getSetting('company_profile_file')?.value}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        >
+                          {lang === 'ar' ? 'عرض' : 'View'}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="company_profile_label_ar">{lang === 'ar' ? 'نص الزر (عربي)' : 'Button Text (Arabic)'}</Label>
+                      <Input
+                        id="company_profile_label_ar"
+                        name="company_profile_label_ar"
+                        defaultValue={getSetting('company_profile_label_ar')?.value || 'تحميل بروفايل الشركة'}
+                        dir="rtl"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="company_profile_label_en">{lang === 'ar' ? 'نص الزر (إنجليزي)' : 'Button Text (English)'}</Label>
+                      <Input
+                        id="company_profile_label_en"
+                        name="company_profile_label_en"
+                        defaultValue={getSetting('company_profile_label_en')?.value || 'Download Company Profile'}
+                        dir="ltr"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* WhatsApp Section */}
+                <div className="space-y-4 p-4 border-2 border-gray-200 rounded-lg">
+                  <h3 className="text-lg font-bold text-gray-900">
+                    {lang === 'ar' ? 'زر الواتساب العائم' : 'Floating WhatsApp Button'}
+                  </h3>
+                  
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="whatsapp_enabled"
+                      name="whatsapp_enabled"
+                      defaultChecked={getSetting('whatsapp_enabled')?.value === 'true'}
+                      className="w-4 h-4"
+                    />
+                    <Label htmlFor="whatsapp_enabled">
+                      {lang === 'ar' ? 'تفعيل زر الواتساب' : 'Enable WhatsApp Button'}
+                    </Label>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="whatsapp_number">{lang === 'ar' ? 'رقم الواتساب' : 'WhatsApp Number'}</Label>
+                    <Input
+                      id="whatsapp_number"
+                      name="whatsapp_number"
+                      defaultValue={getSetting('whatsapp_number')?.value || '+966555499991'}
+                      placeholder="+966555499991"
+                      dir="ltr"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="whatsapp_position">{lang === 'ar' ? 'موضع الزر' : 'Button Position'}</Label>
+                    <select
+                      id="whatsapp_position"
+                      name="whatsapp_position"
+                      defaultValue={getSetting('whatsapp_position')?.value || 'right'}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="right">{lang === 'ar' ? 'يمين' : 'Right'}</option>
+                      <option value="left">{lang === 'ar' ? 'يسار' : 'Left'}</option>
+                    </select>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="whatsapp_message_ar">{lang === 'ar' ? 'الرسالة الافتراضية (عربي)' : 'Default Message (Arabic)'}</Label>
+                      <Textarea
+                        id="whatsapp_message_ar"
+                        name="whatsapp_message_ar"
+                        defaultValue={getSetting('whatsapp_message_ar')?.value || 'مرحباً، أود الاستفسار عن خدماتكم'}
+                        rows={3}
+                        dir="rtl"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="whatsapp_message_en">{lang === 'ar' ? 'الرسالة الافتراضية (إنجليزي)' : 'Default Message (English)'}</Label>
+                      <Textarea
+                        id="whatsapp_message_en"
+                        name="whatsapp_message_en"
+                        defaultValue={getSetting('whatsapp_message_en')?.value || 'Hello, I would like to inquire about your services'}
+                        rows={3}
+                        dir="ltr"
+                      />
+                    </div>
                   </div>
                 </div>
 
