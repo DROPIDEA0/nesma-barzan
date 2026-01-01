@@ -52,6 +52,7 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <img 
+              key={siteLogo}
               src={siteLogo} 
               alt={siteName} 
               className="w-auto"

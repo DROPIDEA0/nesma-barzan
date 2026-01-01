@@ -53,12 +53,14 @@ export default function AdminSettings() {
       const base64 = base64Data.split(',')[1];
 
       try {
+        const oldUrl = getSetting('site_logo')?.value;
         const result = await uploadImage.mutateAsync({
           filename: file.name,
           base64Data: base64,
           mimeType: file.type,
           altTextAr: 'شعار الموقع',
           altTextEn: 'Site Logo',
+          oldUrl: oldUrl,
         });
 
         await handleSaveSetting('site_logo', result.url, 'image', 'general', 'شعار الموقع', 'Site Logo');
@@ -80,12 +82,14 @@ export default function AdminSettings() {
       const base64 = base64Data.split(',')[1];
 
       try {
+        const oldUrl = getSetting('site_favicon')?.value;
         const result = await uploadImage.mutateAsync({
           filename: file.name,
           base64Data: base64,
           mimeType: file.type,
           altTextAr: 'أيقونة الموقع',
           altTextEn: 'Site Favicon',
+          oldUrl: oldUrl,
         });
 
         await handleSaveSetting('site_favicon', result.url, 'image', 'general', 'أيقونة الموقع', 'Site Favicon');
@@ -239,12 +243,14 @@ export default function AdminSettings() {
                         const base64Data = event.target?.result as string;
                         const base64 = base64Data.split(',')[1];
                         try {
+                          const oldUrl = getSetting('admin_logo')?.value;
                           const result = await uploadImage.mutateAsync({
                             filename: file.name,
                             base64Data: base64,
                             mimeType: file.type,
                             altTextAr: 'لوجو لوحة التحكم',
                             altTextEn: 'Admin Panel Logo',
+                            oldUrl: oldUrl,
                           });
                           await handleSaveSetting('admin_logo', result.url, 'image', 'admin', 'لوجو لوحة التحكم', 'Admin Panel Logo');
                           toast.success(lang === 'ar' ? 'تم رفع اللوجو بنجاح' : 'Logo uploaded successfully');

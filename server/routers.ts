@@ -462,6 +462,7 @@ export const appRouter = router({
         mimeType: z.string(),
         altTextAr: z.string().optional(),
         altTextEn: z.string().optional(),
+        oldUrl: z.string().optional(), // URL of old file to delete
       }))
       .mutation(async ({ input }) => {
         const buffer = Buffer.from(input.base64Data, 'base64');
@@ -485,10 +486,24 @@ export const appRouter = router({
           // Directory already exists
         }
         
+        // Delete old file if exists
+        if (input.oldUrl) {
+          try {
+            const oldFilename = input.oldUrl.split('/').pop();
+            if (oldFilename) {
+              const oldFilePath = path.join(uploadsDir, oldFilename);
+              await fs.unlink(oldFilePath).catch(() => {});
+            }
+          } catch (err) {
+            // Old file doesn't exist or couldn't be deleted
+          }
+        }
+        
         const filePath = path.join(uploadsDir, filename);
         await fs.writeFile(filePath, buffer);
         
-        const url = `/uploads/${filename}`;
+        // Add timestamp for cache busting
+        const url = `/uploads/${filename}?t=${Date.now()}`;
         
         const id = await db.createImage({
           filename: input.filename,

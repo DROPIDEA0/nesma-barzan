@@ -678,3 +678,15 @@
 [role="tablist"] button[aria-selected="true"]:hover {
   background-color: #00B4D8 !important;
 }
+
+/* Sidebar menu items hover - black text */
+nav a:hover,
+[role="navigation"] a:hover {
+  color: #000000 !important;
+}
+
+/* Sidebar menu items in admin layout */
+.sidebar a:hover,
+aside a:hover {
+  color: #000000 !important;
+}

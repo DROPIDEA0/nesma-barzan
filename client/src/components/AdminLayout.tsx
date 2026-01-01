@@ -98,7 +98,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       {/* Logo */}
       <div className="p-6 border-b-2 border-gray-200">
         <Link href="/" className="flex items-center gap-3">
-          <img src={adminLogo} alt={adminName} className="w-auto bg-white rounded p-1" style={{ height: `${adminLogoSize}px` }} />
+          <img key={adminLogo} src={adminLogo} alt={adminName} className="w-auto bg-white rounded p-1" style={{ height: `${adminLogoSize}px` }} />
           <div>
             <h1 className="font-bold text-gray-900">
               {adminName}
@@ -120,7 +120,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                 isActive
                   ? 'bg-gradient-to-r from-[#0DCAF0] to-[#48CAE4] text-white shadow-md'
-                  : 'text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-[#0DCAF0]'
+                  : 'text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-black'
               }`}
             >
               <item.icon className="h-5 w-5" />
@@ -135,14 +135,14 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <Link
           href="/admin/change-password"
           onClick={() => setSidebarOpen(false)}
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-[#0DCAF0] transition-colors"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-black transition-colors"
         >
           <Key className="h-5 w-5" />
           <span>{lang === 'ar' ? 'تغيير كلمة المرور' : 'Change Password'}</span>
         </Link>
         <Link
           href="/"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-[#0DCAF0] transition-colors"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-[#f5f0e8] hover:to-[#faf7f2] hover:text-black transition-colors"
         >
           <ArrowLeft className="h-5 w-5" />
           <span>{lang === 'ar' ? 'العودة للموقع' : 'Back to Site'}</span>
