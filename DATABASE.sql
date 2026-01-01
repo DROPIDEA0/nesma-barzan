@@ -163,14 +163,15 @@ DROP TABLE IF EXISTS `projects`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `projects` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `title_ar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title_en` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description_ar` text COLLATE utf8mb4_unicode_ci,
-  `description_en` text COLLATE utf8mb4_unicode_ci,
-  `image` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `category` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('active','inactive') COLLATE utf8mb4_unicode_ci DEFAULT 'active',
-  `order` int DEFAULT '0',
+  `titleAr` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `titleEn` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descriptionAr` text COLLATE utf8mb4_unicode_ci,
+  `descriptionEn` text COLLATE utf8mb4_unicode_ci,
+  `imageUrl` text COLLATE utf8mb4_unicode_ci,
+  `imageKey` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `projectUrl` text COLLATE utf8mb4_unicode_ci,
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `sortOrder` int NOT NULL DEFAULT '0',
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
