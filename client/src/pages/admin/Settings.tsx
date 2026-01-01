@@ -151,6 +151,28 @@ export default function AdminSettings() {
               </div>
             </div>
 
+            {/* Site Logo Size */}
+            <div className="space-y-2">
+              <Label>{lang === 'ar' ? 'حجم شعار الموقع (px)' : 'Site Logo Size (px)'}</Label>
+              <Input
+                type="number"
+                min="30"
+                max="300"
+                defaultValue={getSetting('site_logo_size')?.value || '120'}
+                onChange={(e) => {
+                  handleSaveSetting(
+                    'site_logo_size',
+                    e.target.value,
+                    'text',
+                    'general',
+                    'حجم شعار الموقع',
+                    'Site Logo Size'
+                  );
+                }}
+                placeholder="120"
+              />
+            </div>
+
             {/* Favicon */}
             <div className="space-y-2">
               <Label>{lang === 'ar' ? 'أيقونة الموقع (Favicon)' : 'Site Favicon'}</Label>
@@ -245,6 +267,28 @@ export default function AdminSettings() {
                   </Label>
                 </div>
               </div>
+            </div>
+
+            {/* Admin Logo Size */}
+            <div className="space-y-2">
+              <Label>{lang === 'ar' ? 'حجم لوجو لوحة التحكم (px)' : 'Admin Logo Size (px)'}</Label>
+              <Input
+                type="number"
+                min="20"
+                max="200"
+                defaultValue={getSetting('admin_logo_size')?.value || '80'}
+                onChange={(e) => {
+                  handleSaveSetting(
+                    'admin_logo_size',
+                    e.target.value,
+                    'text',
+                    'admin',
+                    'حجم لوجو لوحة التحكم',
+                    'Admin Logo Size'
+                  );
+                }}
+                placeholder="80"
+              />
             </div>
 
             {/* Admin Panel Name */}

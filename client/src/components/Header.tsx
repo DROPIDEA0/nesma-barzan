@@ -29,6 +29,7 @@ export function Header() {
 
   const siteLogo = getSetting('site_logo') || '/logo.png';
   const siteName = lang === 'ar' ? (getSetting('site_name_ar') || 'نسمة برزان') : (getSetting('site_name_en') || 'Nesma Barzan');
+  const siteLogoSize = getSetting('site_logo_size') || '120';
 
   const navItems = [
     { href: '/', label: getContent('header_home') || t('nav.home') },
@@ -53,7 +54,8 @@ export function Header() {
             <img 
               src={siteLogo} 
               alt={siteName} 
-              className="h-14 w-auto"
+              className="w-auto"
+              style={{ height: `${siteLogoSize}px` }}
             />
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold text-foreground">
@@ -130,7 +132,7 @@ export function Header() {
               <SheetContent side={isRTL ? 'right' : 'left'} className="w-80">
                 <div className="flex flex-col gap-6 mt-8">
                   <div className="flex items-center gap-3">
-                    <img src={siteLogo} alt={siteName} className="h-12 w-auto" />
+                    <img src={siteLogo} alt={siteName} className="w-auto" style={{ height: `${siteLogoSize}px` }} />
                     <div>
                       <h2 className="font-bold">{siteName}</h2>
                       <p className="text-xs text-muted-foreground">{lang === 'ar' ? 'التجارية' : 'Trading'}</p>

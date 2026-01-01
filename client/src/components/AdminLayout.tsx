@@ -37,6 +37,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   const adminLogo = getSetting('admin_logo') || '/logo.png';
   const adminName = lang === 'ar' ? (getSetting('admin_name_ar') || 'نسمة برزان') : (getSetting('admin_name_en') || 'Nesma Barzan');
+  const adminLogoSize = getSetting('admin_logo_size') || '80';
 
   const isAdmin = user?.role === 'admin';
 
@@ -97,7 +98,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       {/* Logo */}
       <div className="p-6 border-b-2 border-gray-200">
         <Link href="/" className="flex items-center gap-3">
-          <img src={adminLogo} alt={adminName} className="h-10 w-auto bg-white rounded p-1" />
+          <img src={adminLogo} alt={adminName} className="w-auto bg-white rounded p-1" style={{ height: `${adminLogoSize}px` }} />
           <div>
             <h1 className="font-bold text-gray-900">
               {adminName}
@@ -178,7 +179,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         </Sheet>
 
         <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="Nesma Barzan" className="h-8 w-auto bg-white rounded p-0.5" />
+          <img src={adminLogo} alt={adminName} className="w-auto bg-white rounded p-0.5" style={{ height: `${adminLogoSize}px` }} />
           <span className="font-bold text-gray-900">{t('admin.title')}</span>
         </div>
 
