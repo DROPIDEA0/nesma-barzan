@@ -388,7 +388,7 @@ export default function Home() {
               >
                 {/* Vision Card */}
                 <motion.div variants={staggerItem}>
-                  <Card className="shadow-luxury border-0 overflow-hidden hover-lift glass-gold animated-border">
+                  <Card className="dark-card shadow-luxury border-0 overflow-hidden hover-lift glass-gold animated-border">
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <motion.div 
@@ -412,7 +412,7 @@ export default function Home() {
 
                 {/* Mission Card */}
                 <motion.div variants={staggerItem}>
-                  <Card className="shadow-luxury border-0 overflow-hidden hover-lift glass-gold animated-border">
+                  <Card className="dark-card shadow-luxury border-0 overflow-hidden hover-lift glass-gold animated-border">
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <motion.div 
@@ -525,7 +525,7 @@ export default function Home() {
 
             {/* Copyright Info */}
             <AnimatedSection>
-              <Card className="mb-12 border-0 bg-primary/5 overflow-hidden animated-border">
+              <Card className="dark-card mb-12 border-0 bg-primary/5 overflow-hidden animated-border">
                 <CardContent className="p-8">
                   <div className="flex items-center gap-4 mb-6">
                     <motion.div
@@ -574,7 +574,7 @@ export default function Home() {
                   { icon: Clock, text: t('shheer.mechanism.dailyHours') },
                 ].map((item, index) => (
                   <motion.div key={index} variants={staggerItem}>
-                    <Card className="text-center shadow-elegant border-0 hover-lift h-full animated-border">
+                    <Card className="dark-card text-center shadow-elegant border-0 hover-lift h-full animated-border">
                       <CardContent className="p-6">
                         <motion.div
                           whileHover={{ scale: 1.2, rotate: 10 }}
@@ -609,7 +609,7 @@ export default function Home() {
                   { icon: Zap, text: lang === 'ar' ? 'منصة بث حر غير محدود' : 'Unlimited free broadcasting' },
                 ].map((item, index) => (
                   <motion.div key={index} variants={staggerItem}>
-                    <Card className="shadow-elegant border-0 hover-lift h-full animated-border">
+                    <Card className="dark-card shadow-elegant border-0 hover-lift h-full animated-border">
                       <CardContent className="p-6 flex items-center gap-4">
                         <motion.div 
                           className="p-3 rounded-xl bg-primary/10"
@@ -720,7 +720,7 @@ export default function Home() {
               >
                 {projectsData.map((project, index) => (
                   <motion.div key={project.id} variants={staggerItem}>
-                    <Card className="overflow-hidden shadow-elegant border-0 hover-lift group h-full animated-border">
+                    <Card className="dark-card overflow-hidden shadow-elegant border-0 hover-lift group h-full animated-border">
                       {project.imageUrl && (
                         <div className="aspect-video overflow-hidden">
                           <motion.img 
@@ -746,7 +746,7 @@ export default function Home() {
               </motion.div>
             ) : (
               <AnimatedSection className="text-center py-12">
-                <Card className="max-w-md mx-auto shadow-elegant border-0 hover-lift animated-border">
+                <Card className="dark-card max-w-md mx-auto shadow-elegant border-0 hover-lift animated-border">
                   <CardContent className="p-8">
                     <motion.div 
                       className="p-4 rounded-full bg-primary/10 w-fit mx-auto mb-4"
@@ -809,7 +809,7 @@ export default function Home() {
                 { icon: MapPin, label: t('contact.address'), value: t('contact.addressValue') },
               ].map((item, index) => (
                 <motion.div key={index} variants={staggerItem}>
-                  <Card className="shadow-elegant border-0 hover-lift h-full animated-border">
+                  <Card className="dark-card shadow-elegant border-0 hover-lift h-full animated-border">
                     <CardContent className="p-6">
                       {item.href ? (
                         <a 

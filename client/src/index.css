@@ -57,8 +57,8 @@
   --radius: 1rem;
   --background: oklch(0.08 0.03 240);
   --foreground: oklch(0.95 0.01 240);
-  --card: oklch(0.08 0.03 240);
-  --card-foreground: oklch(0.95 0.01 240);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.04 240);
   --popover: oklch(0.12 0.04 240);
   --popover-foreground: oklch(0.95 0.01 240);
   --secondary: oklch(0.18 0.04 240);
@@ -447,6 +447,20 @@
   .counter {
     display: inline-block;
     animation: counterPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  /* Dark card for home page only */
+  .dark-card {
+    background: oklch(0.08 0.03 240) !important;
+    color: oklch(0.95 0.01 240) !important;
+  }
+  
+  .dark-card * {
+    color: oklch(0.95 0.01 240);
+  }
+  
+  .dark-card .text-muted-foreground {
+    color: oklch(0.85 0.02 240) !important;
   }
 }
 
