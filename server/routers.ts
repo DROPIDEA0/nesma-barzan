@@ -609,7 +609,7 @@ export const appRouter = router({
         email: z.string().email().max(255),
         phone: z.string().max(50).optional(),
         subject: z.string().max(500).optional(),
-        message: z.string().min(10),
+        message: z.string().min(5),
       }))
       .mutation(async ({ input }) => {
         const id = await db.createContactMessage(input);

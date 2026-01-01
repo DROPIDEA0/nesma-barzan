@@ -66,6 +66,11 @@ export default function Contact() {
       return;
     }
     
+    if (formData.message.trim().length < 5) {
+      toast.error(isRTL ? 'الرسالة يجب أن تحتوي على 5 أحرف على الأقل' : 'Message must be at least 5 characters long');
+      return;
+    }
+    
     setIsSubmitting(true);
     console.log('Sending contact message:', formData);
     createMessage.mutate(formData);
