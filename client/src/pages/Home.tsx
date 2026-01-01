@@ -630,7 +630,7 @@ export default function Home() {
             {/* Revenue */}
             <AnimatedSection>
               <motion.div 
-                className="bg-sidebar text-sidebar-foreground rounded-2xl p-8 overflow-hidden relative"
+                className="bg-card text-card-foreground rounded-2xl p-8 overflow-hidden relative"
                 whileHover={{ scale: 1.01 }}
               >
                 {/* Animated Background */}
@@ -664,7 +664,7 @@ export default function Home() {
                   ].map((item, index) => (
                     <motion.div 
                       key={index} 
-                      className="text-center p-6 rounded-xl bg-sidebar-accent hover-glow animated-border gold-glow"
+                      className="text-center p-6 rounded-xl bg-card hover-glow animated-border gold-glow"
                       variants={staggerItem}
                       whileHover={{ y: -5 }}
                     >
