@@ -181,7 +181,6 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         </Sheet>
 
         <div className="flex items-center gap-2">
-          <img src={adminLogo} alt={adminName} className="w-auto bg-white rounded p-0.5" style={{ height: `${adminLogoSize}px` }} />
           <span className="font-bold text-gray-900">{t('admin.title')}</span>
         </div>
 
