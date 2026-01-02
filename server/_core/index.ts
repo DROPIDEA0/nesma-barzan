@@ -91,10 +91,11 @@ async function startServer() {
     serveStatic(app);
   }
 
-  // Always try to find an available port to avoid EADDRINUSE errors
-  // Start from the configured PORT or default to 3000
-  const startPort = parseInt(process.env.PORT || "3000");
-  const port = await findAvailablePort(startPort);
+  // In production, use port 3000 directly (Nginx is configured for it)
+  // In development, find an available port to avoid conflicts
+  const port = process.env.NODE_ENV === "production"
+    ? 3000
+    : await findAvailablePort(parseInt(process.env.PORT || "3000"));
 
   server.listen(port, "0.0.0.0", () => {
     console.log(`Server running on port ${port}`);
