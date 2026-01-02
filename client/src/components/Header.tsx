@@ -149,10 +149,6 @@ export function Header() {
                 <div className="flex flex-col gap-6 mt-8">
                   <div className="flex items-center gap-3">
                     <img src={siteLogo} alt={siteName} className="w-auto" style={{ height: `${siteLogoSize}px` }} />
-                    <div>
-                      <h2 className="font-bold">{siteName}</h2>
-                      <p className="text-xs text-white">{lang === 'ar' ? 'التجارية' : 'Trading'}</p>
-                    </div>
                   </div>
                   
                   <nav className="flex flex-col gap-2">
@@ -177,7 +173,21 @@ export function Header() {
                     )}
                   </nav>
 
-                  <div className="border-t pt-4">
+                  <div className="border-t pt-4 space-y-3">
+                    {/* Company Profile Download Button */}
+                    {getSetting('company_profile_enabled') === 'true' && getSetting('company_profile_file') && (
+                      <Button
+                        variant="outline"
+                        className="w-full gap-2"
+                        asChild
+                      >
+                        <a href={getSetting('company_profile_file')} download target="_blank" rel="noopener noreferrer">
+                          <Download className="h-4 w-4" />
+                          <span>{lang === 'ar' ? (getSetting('company_profile_label_ar') || 'تحميل البروفايل') : (getSetting('company_profile_label_en') || 'Download Profile')}</span>
+                        </a>
+                      </Button>
+                    )}
+
                     {isAuthenticated ? (
                       <Button
                         variant="outline"
