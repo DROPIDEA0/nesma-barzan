@@ -109,3 +109,38 @@ temp/
 # Temporary database dumps
 database_dump.sql
 *.sql.gz
+
+# ===================================
+# Documentation Policy (STRICT)
+# ===================================
+# ONLY UNIFIED_DOCUMENTATION.md is allowed
+# Any other .md files are FORBIDDEN
+README.md
+DEPLOYMENT.md
+PROJECT_DOCUMENTATION.md
+TODO.md
+NOTES.md
+CHANGELOG.md
+GUIDE.md
+MANUAL.md
+
+# ===================================
+# Database Policy (STRICT)
+# ===================================
+# ONLY DATABASE.sql is allowed
+# Any other .sql files are FORBIDDEN
+add_*.sql
+update_*.sql
+migration_*.sql
+fix_*.sql
+test_*.sql
+backup_*.sql
+dump_*.sql
+schema_*.sql
+data_*.sql
+
+# Keep production environment file
+!.env.production
+
+# Uploads directory (managed on server)
+uploads/

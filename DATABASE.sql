@@ -23,7 +23,6 @@
 /*!50717 PREPARE s FROM @rocksdb_enable_bulk_load */;
 /*!50717 EXECUTE s */;
 /*!50717 DEALLOCATE PREPARE s */;
-mysqldump: Error: 'Access denied; you need (at least one of) the PROCESS privilege(s) for this operation' when trying to dump tablespaces
 
 --
 -- Table structure for table `contact_messages`
