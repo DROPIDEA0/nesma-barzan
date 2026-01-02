@@ -590,7 +590,7 @@ export async function createContactMessage(data: { name: string; email: string; 
     ];
     console.log('[Database] Query params:', JSON.stringify(params));
     
-    const [result]: any = await connection.execute(query, params);
+    const [result]: any = await connection.query(query, params);
     console.log('[Database] Contact message created successfully, ID:', result.insertId);
     return result.insertId;
   } catch (error) {
