@@ -531,16 +531,16 @@ export async function getContactMessages(options: { status?: string; limit?: num
   if (!db) return [];
   
   try {
-    const query = `
-      SELECT * FROM contact_messages
-      ${options.status ? 'WHERE status = ?' : ''}
-      ORDER BY created_at DESC
-      LIMIT ? OFFSET ?
-    `;
+    let query = 'SELECT * FROM contact_messages';
+    const params: any[] = [];
     
-    const params = options.status 
-      ? [options.status, options.limit || 50, options.offset || 0]
-      : [options.limit || 50, options.offset || 0];
+    if (options.status) {
+      query += ' WHERE status = ?';
+      params.push(options.status);
+    }
+    
+    query += ' ORDER BY created_at DESC LIMIT ? OFFSET ?';
+    params.push(options.limit || 50, options.offset || 0);
     
     const [rows] = await db.execute(query, params);
     return rows;
