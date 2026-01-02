@@ -134,15 +134,15 @@ export function Header() {
                 asChild
                 className="hidden sm:flex gradient-gold text-white border-0"
               >
-                <a href={getLoginUrl()}>{t('nav.login')}</a>
+                <Link href="/admin">{t('nav.login')}</Link>
               </Button>
             )}
 
             {/* Mobile Menu */}
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild className="lg:hidden">
-                <Button variant="ghost" size="icon">
-                  <Menu className="h-5 w-5" />
+                <Button variant="ghost" size="icon" className="p-3">
+                  <Menu className="h-7 w-7" />
                 </Button>
               </SheetTrigger>
               <SheetContent side={isRTL ? 'right' : 'left'} className="w-80">
@@ -195,7 +195,7 @@ export function Header() {
                         className="w-full gradient-gold text-white border-0"
                         asChild
                       >
-                        <a href={getLoginUrl()}>{t('nav.login')}</a>
+                        <Link href="/admin">{t('nav.login')}</Link>
                       </Button>
                     )}
                   </div>

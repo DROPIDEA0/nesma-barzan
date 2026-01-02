@@ -246,11 +246,11 @@ export default function Home() {
               ].map((stat, index) => (
                 <motion.div 
                   key={index} 
-                  className="text-center"
+                  className="text-center px-2"
                   variants={staggerItem}
                 >
                   <motion.p 
-                    className="text-3xl md:text-4xl font-bold text-gradient-blue"
+                    className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient-blue"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.5 + index * 0.2, duration: 0.5, type: "spring" }}
@@ -260,7 +260,7 @@ export default function Home() {
                   >
                     {stat.value}
                   </motion.p>
-                  <p className="text-sm text-white mt-1">{stat.label}</p>
+                  <p className="text-xs sm:text-sm text-white mt-1 leading-tight">{stat.label}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -482,9 +482,9 @@ export default function Home() {
                 className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-2xl p-6 mb-12 border border-primary/20"
                 whileHover={{ scale: 1.02 }}
               >
-                <div className="flex items-center justify-center gap-3 text-center">
-                  <TrendingUp className="h-6 w-6 text-primary" />
-                  <p className="text-lg font-medium">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-center">
+                  <TrendingUp className="h-10 w-10 md:h-6 md:w-6 text-primary flex-shrink-0" />
+                  <p className="text-base md:text-lg font-medium">
                     {lang === 'ar' 
                       ? 'حجم سوق الإعلانات على الهواتف المحمولة يتجاوز 400 مليار دولار عالمياً في 2024، ومن المتوقع أن يصل إلى تريليون دولار بحلول 2032'
                       : 'Mobile advertising market size exceeds $400 billion globally in 2024, expected to reach $1 trillion by 2032'}
