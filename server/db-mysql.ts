@@ -5,6 +5,7 @@ import { users, siteSettings, siteContent, projects, images } from '../drizzle/s
 
 let db: ReturnType<typeof drizzle> | null = null;
 let connection: mysql.Connection | null = null;
+let rawConnection: mysql.Connection | null = null;
 
 // Test MySQL connection
 export async function testMySQLConnection(config: any) {
@@ -118,6 +119,7 @@ export async function initializeMySQL() {
     }
     
     connection = await mysql.createConnection(config);
+    rawConnection = await mysql.createConnection(config);
 
     db = drizzle(connection);
 
@@ -157,8 +159,8 @@ export { db, connection };
 
 // Get raw MySQL connection for raw SQL queries
 export async function getMySQLConnection() {
-  if (!connection) {
+  if (!rawConnection) {
     await initializeMySQL();
   }
-  return connection;
+  return rawConnection;
 }
