@@ -671,7 +671,7 @@ export default function AdminSettings() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="company_profile_label_ar">{lang === 'ar' ? 'نص الزر (عربي)' : 'Button Text (Arabic)'}</Label>
                       <Input
